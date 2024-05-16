@@ -1,6 +1,6 @@
 # Zynqa - Connect, Share, Discover
 
-![Zynqa Logo](public/zynqa_logo.png)
+![Zynqa Logo](public/zynqa_logo.png){:style="width: 200px; display: block; margin: 0 auto;"}
 
 Zynqa is a dynamic community platform designed for sharing ideas, sparking discussions, and discovering new perspectives. Join the conversation and explore a vibrant space where your voice matters.
 

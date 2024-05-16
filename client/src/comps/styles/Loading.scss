@@ -1,0 +1,40 @@
+@use '../../styles/App';
+
+#loading {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: App.$width;
+	height: App.$height;
+	background: App.$primaryGradient;
+}
+
+#loading > div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: calc(App.$height / 2);
+	height: calc(App.$height / 2);
+	animation: 1s infinite loadingWheel ease-in-out;
+	border-radius: 10rem;
+	background: conic-gradient(
+		transparent,
+		white,
+	);
+}
+
+@keyframes loadingWheel {
+	from {
+		transform: rotate(0deg);
+	} to {
+		transform: rotate(360deg);
+	}
+}
+
+#loading > div > div {
+	width: calc(App.$height / 3.5);
+	height: calc(App.$height / 3.5);
+	border-radius: 10rem;
+	background: App.$primary;
+}
