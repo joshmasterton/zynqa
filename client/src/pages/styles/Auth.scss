@@ -1,0 +1,67 @@
+@use '../../styles/App';
+
+#auth {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	max-width: App.$widthMax;
+	padding: App.$pad;
+	margin: App.$padLarge;
+	margin-top: calc(App.$padLarge * 4);
+	margin-bottom: calc(App.$padLarge * 4);
+	gap: calc(App.$padLarge * 4);
+}
+
+html.dark #auth {
+	background: App.$darkSubtle;
+}
+
+html.light #auth {
+	background: App.$lightSubtle;
+}
+
+#auth > header, #auth > main, #auth > footer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	gap: App.$pad;
+}
+
+#auth > header, #auth > footer {
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: App.$pad;
+	text-align: center;
+}
+
+#auth > header {
+	justify-content: space-between;
+}
+
+#auth > main .authLabel {
+	position: relative;
+	width: 100%;
+}
+
+#auth > main > div button {
+	color: inherit;
+}
+
+#auth > main div.authLabel input {
+	padding-right: App.$height;
+}
+
+#auth > main .authLabel > button {
+	position: absolute;
+	width: fit-content;
+	height: fit-content;
+	right: 0;
+	bottom: 0;
+	padding: 0;
+	background: transparent;
+}
+

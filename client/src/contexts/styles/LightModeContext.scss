@@ -1,0 +1,43 @@
+@use '../../styles/App';
+
+#lightMode {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: App.$height;
+	width: 100%;
+	max-width: App.$width;
+}
+
+html.dark #lightMode {
+	outline: App.$outline App.$darkSubtle;
+	background: App.$darkBright;
+}
+
+html.light #lightMode {
+	outline: App.$outline App.$lightSubtle;
+	background: App.$lightBright;
+}
+
+#lightMode > button {
+	width: calc(App.$height / 1.15);
+	height: calc(App.$height / 1.15);
+	padding: 0;
+	transition: App.$animationNormal transform;
+	outline: none;
+	box-shadow: 0 0 0 0;
+}
+
+#lightMode > button > svg {
+	width: calc(App.$height / 1.15);
+	height: calc(App.$height / 1.15);
+	padding: calc(App.$padSmall / 1.5);
+}
+
+#lightMode > button.left {
+	transform: translateX( - calc(App.$padSmall * 2));
+}
+
+#lightMode > button.right {
+	transform: translateX(calc(App.$padSmall * 2));
+}

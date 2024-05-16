@@ -1,0 +1,180 @@
+// Themes
+$primary: rgb(42, 107, 227);
+$primaryGradient: linear-gradient(
+	45deg,
+	rgb(42, 107, 227),
+	rgb(42, 90, 180)
+);
+
+// Dark
+$dark: rgb(15, 15, 16);
+$darkSubtle: rgb(25, 25, 32);
+$darkBright: rgb(30, 30, 40);
+
+// Light
+$light: rgb(245, 245, 250);
+$lightSubtle: rgb(255, 255, 255);
+$lightBright: $light;
+
+// Outline
+$outlinePrimary: 0.1rem solid $primary;
+$shadowPrimary: 0 0 0 0.2rem $primary;
+$outline: 0.1rem solid;
+$outlineTransparent: 0.1rem solid transparent;
+
+// Font sizes
+$font: 1rem;
+$fontLarge: 1.25rem;
+$fontSmall: 0.8rem;
+
+// Padding
+$padSmall: 0.75rem;
+$pad: 1rem;
+$padLarge: 1.5rem;
+
+// Sizes
+$height: 2.5rem;
+$width: 5.5rem;
+$widthLarge: 16rem;
+$widthMax: 30rem;
+
+// Shape
+$round: 1rem;
+
+// Animation
+$animationNormal: 0.4s ease;
+
+* {
+	text-size-adjust: none;
+	-webkit-text-size-adjust: none;
+	outline: $outlineTransparent;
+	border-radius: $round;
+	background: transparent;
+}
+
+html.dark {
+	color: $light;
+}
+
+html.light {
+	color: $dark;
+}
+
+html.dark *::placeholder {
+	color: rgb(75, 75, 90);
+}
+
+html.light *::placeholder {
+	color: rgb(160, 160, 175);
+}
+
+html.dark *:focus, html.dark a:hover, html.dark a:focus,
+html.dark button:hover, html.dark button:focus,
+html.dark input:hover, html.dark input:focus {
+	outline: $outline $darkSubtle;
+	box-shadow: $shadowPrimary;
+}
+
+html.light *:focus, html.light a:hover, html.light a:focus,
+html.light button:hover, html.light button:focus,
+html.light input:hover, html.light input:focus {
+	outline: $outline $lightSubtle;
+	box-shadow: $shadowPrimary;
+}
+
+html, body, #root {
+	height: 100%;
+}
+
+html.dark {
+	background: $dark;
+}
+
+html.light {
+	background: $light;
+}
+
+button, label, input, a {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: $height;
+	width: 100%;
+	padding: $pad;
+	transition: outline-color $animationNormal, box-shadow $animationNormal;
+}
+
+button {
+	max-width: $width;
+	color: $light;
+	background: $primaryGradient;
+}
+
+a {
+	max-width: $width;
+	color: inherit;
+	background: $primary;
+}
+
+a.link {
+	width: fit-content;
+	height: fit-content;
+	padding: 0;
+	font-size: $fontSmall;
+	text-decoration: underline;
+	background: transparent;
+}
+
+label {
+	position: relative;
+	width: 100%;
+	height: fit-content;
+	flex-direction: column;
+	align-items: start;
+	gap: $padSmall;
+	padding: 0;
+}
+
+label > svg {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	pointer-events: none;
+}
+
+
+input {
+	width: 100%;
+	padding-left: $height;
+	outline: $outline;
+	color: inherit;
+}
+
+html.dark input {
+	outline: $outline $darkSubtle;
+	background: $darkBright;
+}
+
+html.light input {
+	outline: $outline $lightSubtle;
+	background: $lightBright;
+}
+
+img {
+	width: $width;
+	height: $width;
+}
+
+svg {
+	height: $height;
+	width: $height;
+	padding: $padSmall;
+}
+
+h1 {
+	font-size: $fontLarge;
+}
+
+p {
+	font-size: $fontSmall;
+}
