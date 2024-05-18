@@ -1,5 +1,8 @@
 import {type ChangeEvent, type FormEvent, useState} from 'react';
-import {type ShowPasswords, type AuthDetails, type AuthProps} from '../types/AuthTypes';
+import {
+	type ShowPasswords, type AuthDetails, type AuthProps, type User,
+} from '../types/AuthTypes';
+import {request} from '../requests/requests';
 import {Link} from 'react-router-dom';
 import {LightMode} from '../contexts/LightModeContext';
 import {FaLock, FaUser} from 'react-icons/fa';
@@ -14,7 +17,7 @@ export function Auth({isLogin}: AuthProps) {
 	const [authDetails, setAuthDetails] = useState<AuthDetails>({
 		username: 'Zonomaly',
 		password: 'Password',
-		confirmPassword: '',
+		confirmPassword: 'Password',
 	});
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,13 +29,21 @@ export function Auth({isLogin}: AuthProps) {
 		}));
 	};
 
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		if (isLogin) {
-			console.log({username: authDetails.username, password: authDetails.password});
-		} else {
-			console.log(authDetails);
+		try {
+			if (isLogin) {
+				const login = await request<AuthDetails, User>('/login', 'POST', authDetails);
+				console.log(login);
+			} else {
+				const signup = await request<AuthDetails, User>('/signup', 'POST', authDetails);
+				console.log(signup);
+			}
+		} catch (error) {
+			if (error instanceof Error) {
+				console.error(error.message);
+			}
 		}
 	};
 
@@ -44,15 +55,15 @@ export function Auth({isLogin}: AuthProps) {
 	};
 
 	return (
-		<form id='auth' method='POST' onSubmit={e => {
-			handleSubmit(e);
+		<form id='auth' method='POST' onSubmit={async e => {
+			await handleSubmit(e);
 		}}>
 			<header>
 				<h1>{isLogin ? 'Login' : 'Signup'}</h1>
-				<LightMode/>
 			</header>
 			<main>
 				<label htmlFor='username' className='authLabel'>
+					<div>Username</div>
 					<FaUser/>
 					<input
 						type='text'
@@ -67,6 +78,7 @@ export function Auth({isLogin}: AuthProps) {
 				</label>
 				<div className='authLabel'>
 					<label htmlFor='password'>
+						<div>Password</div>
 						<FaLock/>
 						<input
 							type={showPassword.password ? 'text' : 'password'}
@@ -88,6 +100,7 @@ export function Auth({isLogin}: AuthProps) {
 				{isLogin ? null : (
 					<div className='authLabel'>
 						<label htmlFor='confirmPassword'>
+							<div>Confirm Password</div>
 							<FaLock/>
 							<input
 								type={showPassword.confirmPassword ? 'text' : 'password'}
@@ -120,6 +133,7 @@ export function Auth({isLogin}: AuthProps) {
 					: <Link to='/login' className='link'>Login</Link>
 				}
 			</footer>
+			<LightMode/>
 		</form>
 	);
 }

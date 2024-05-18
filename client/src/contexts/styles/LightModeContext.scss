@@ -10,13 +10,13 @@
 }
 
 html.dark #lightMode {
-	outline: App.$outline App.$darkSubtle;
+	outline: App.$outline App.$darkBright;
 	background: App.$darkBright;
 }
 
 html.light #lightMode {
 	outline: App.$outline App.$lightSubtle;
-	background: App.$lightBright;
+	background: App.$lightSubtle;
 }
 
 #lightMode > button {

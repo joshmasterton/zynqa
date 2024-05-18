@@ -1,17 +1,18 @@
 @use '../../styles/App';
 
 #auth {
-	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
+	width: 100%;
+	height: 100%;
 	max-width: App.$widthMax;
-	padding: App.$pad;
-	margin: App.$padLarge;
-	margin-top: calc(App.$padLarge * 4);
-	margin-bottom: calc(App.$padLarge * 4);
-	gap: calc(App.$padLarge * 4);
+	padding: App.$padLarge;
+	margin: App.$pad;
+	margin-top: calc(App.$padLarge * 5);
+	margin-bottom: calc(App.$padLarge * 5);
+	gap: App.$padLarge;
 }
 
 html.dark #auth {
@@ -20,6 +21,13 @@ html.dark #auth {
 
 html.light #auth {
 	background: App.$lightSubtle;
+}
+
+#auth #lightMode {
+	position: absolute;
+	top: App.$pad;
+	right: App.$pad;
+	align-self: flex-end;
 }
 
 #auth > header, #auth > main, #auth > footer {
@@ -38,17 +46,23 @@ html.light #auth {
 	text-align: center;
 }
 
-#auth > header {
-	justify-content: space-between;
+#auth > main .authLabel, #auth > main .authLabel > label {
+	position: relative;
+	display: flex;
+	gap: calc(App.$padSmall / 2);
+	width: 100%;
 }
 
-#auth > main .authLabel {
-	position: relative;
-	width: 100%;
+#auth > main label div {
+	font-size: App.$fontSmall;
 }
 
 #auth > main > div button {
 	color: inherit;
+}
+
+#auth > main > button {
+	margin-top: App.$padSmall;
 }
 
 #auth > main div.authLabel input {
