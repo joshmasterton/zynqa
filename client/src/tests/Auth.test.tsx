@@ -1,18 +1,23 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import {describe, expect, test} from 'vitest';
 import {render, screen, fireEvent} from '@testing-library/react';
-import {LightModeProvider} from '../../contexts/LightModeContext';
+import {PopupProvider} from '../contexts/PopupContext';
+import {UserProvider} from '../contexts/UserContext';
+import {LightModeProvider} from '../contexts/LightModeContext';
 import {RouterProvider, createMemoryRouter} from 'react-router-dom';
-import {routes} from '../../App';
+import {routes} from '../App';
 
 describe('Auth Components', () => {
 	const renderAuth = (initialPath: string) => {
 		const router = createMemoryRouter(routes, {initialEntries: [initialPath]});
 
 		return (
-			<LightModeProvider>
-				<RouterProvider router={router}/>
-			</LightModeProvider>
+			<UserProvider>
+				<PopupProvider>
+					<LightModeProvider>
+						<RouterProvider router={router}/>
+					</LightModeProvider>
+				</PopupProvider>
+			</UserProvider>
 		);
 	};
 

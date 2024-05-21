@@ -4,9 +4,10 @@ import helmet from 'helmet';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import {createUsersTable} from './database/createTables.ts';
 import {signup} from './routes/auth/signup.ts';
 import {login} from './routes/auth/login.ts';
-import {createUsersTable} from './database/createTables.ts';
+import {getUser} from './routes/user/getUser.ts';
 dotenv.config({path: 'src/.env'});
 
 const app = express();
@@ -33,6 +34,7 @@ createUsersTable()
 // Routes
 app.use('/signup', signup);
 app.use('/login', login);
+app.use('/getUser', getUser);
 
 app.listen(PORT, () => {
 	console.log(`Listening to server on port ${PORT}`);

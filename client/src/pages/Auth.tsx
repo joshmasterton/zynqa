@@ -3,13 +3,16 @@ import {
 	type ShowPasswords, type AuthDetails, type AuthProps, type User,
 } from '../types/AuthTypes';
 import {request} from '../requests/requests';
+import {usePopup} from '../contexts/PopupContext';
 import {Link} from 'react-router-dom';
 import {LightMode} from '../contexts/LightModeContext';
 import {FaLock, FaUser} from 'react-icons/fa';
 import {BsEyeFill, BsEyeSlashFill} from 'react-icons/bs';
+import {BiPlus} from 'react-icons/bi';
 import './styles/Auth.scss';
 
 export function Auth({isLogin}: AuthProps) {
+	const {setPopup} = usePopup();
 	const [showPassword, setShowPasswords] = useState<ShowPasswords>({
 		password: false,
 		confirmPassword: false,
@@ -18,7 +21,22 @@ export function Auth({isLogin}: AuthProps) {
 		username: 'Zonomaly',
 		password: 'Password',
 		confirmPassword: 'Password',
+		profilePicture: undefined,
 	});
+
+	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+		if (e?.target?.files?.[0]) {
+			if (validImageTypes.includes(e.target.files[0].type)) {
+				setAuthDetails(prevState => ({
+					...prevState,
+					profilePicture: e?.target?.files?.[0],
+				}));
+			} else {
+				setPopup('Muse be a valid image type');
+			}
+		}
+	};
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const {name, value} = e.target;
@@ -34,15 +52,25 @@ export function Auth({isLogin}: AuthProps) {
 
 		try {
 			if (isLogin) {
-				const login = await request<AuthDetails, User>('/login', 'POST', authDetails);
+				const login = await request<AuthDetails, User>('/login', 'POST', false, authDetails);
 				console.log(login);
-			} else {
-				const signup = await request<AuthDetails, User>('/signup', 'POST', authDetails);
-				console.log(signup);
+			} else if (!isLogin) {
+				if (authDetails.confirmPassword && authDetails.profilePicture) {
+					const formData = new FormData();
+					formData.append('username', authDetails.username);
+					formData.append('password', authDetails.password);
+					formData.append('confirmPassword', authDetails.confirmPassword);
+					formData.append('profilePicture', authDetails.profilePicture);
+
+					const signup = await request<BodyInit, User>('/signup', 'POST', true, formData);
+					console.log(signup);
+				} else {
+					setPopup('Choose a profile picture');
+				}
 			}
 		} catch (error) {
 			if (error instanceof Error) {
-				console.error(error.message);
+				setPopup(error.message);
 			}
 		}
 	};
@@ -62,6 +90,20 @@ export function Auth({isLogin}: AuthProps) {
 				<h1>{isLogin ? 'Login' : 'Signup'}</h1>
 			</header>
 			<main>
+				{!isLogin && (
+					<div>
+						<div>Add profile picture</div>
+						<label className='file' htmlFor='profilePicture' aria-label='Add Profile Picture'>
+							<input type='file' id='profilePicture' onChange={e => {
+								handleFileChange(e);
+							}}/>
+							<BiPlus/>
+							{authDetails.profilePicture && (
+								<img alt='' src={URL.createObjectURL(authDetails?.profilePicture)}/>
+							)}
+						</label>
+					</div>
+				)}
 				<label htmlFor='username' className='authLabel'>
 					<div>Username</div>
 					<FaUser/>

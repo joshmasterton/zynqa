@@ -1,14 +1,46 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import {type User, type AuthDetails} from '../../types/authTypes.ts';
 import express from 'express';
+import multer from 'multer';
+import aws from 'aws-sdk';
+import dotenv from 'dotenv';
 import {hash} from 'bcryptjs';
 import {check, validationResult} from 'express-validator';
 import {queryDatabase} from '../../database/initializeDatabase.ts';
 import {generateAccessToken, generateRefreshToken} from '../../token/generateToken.ts';
+import sharp from 'sharp';
+dotenv.config({path: 'src/.env'});
 
 export const signup = express.Router();
+const {AWS_ACCESS_KEY_ID, AWS_ACCESS_KEY_SECRET, AWS_REGION} = process.env;
+const storage = multer.memoryStorage();
+const upload = multer({
+	storage,
+	limits: {fileSize: 5 * 1024 * 1024},
+	fileFilter(_req, file, cb) {
+		const filetypes = /jpeg|jpg|gif|png/;
+		const mimetype = filetypes.test(file.mimetype);
+		const extname = filetypes.test(file.originalname.toLowerCase());
+
+		if (mimetype && extname) {
+			cb(null, true);
+		} else {
+			cb(new Error('Invalid file type. Only JPEG, PNG and GIF files are allowed.'));
+		}
+	},
+});
+
+aws.config.update({
+	accessKeyId: AWS_ACCESS_KEY_ID,
+	secretAccessKey: AWS_ACCESS_KEY_SECRET,
+	region: AWS_REGION,
+});
+
+const s3 = new aws.S3();
 
 signup.post(
 	'/',
+	upload.single('profilePicture'),
 	check('username').isString().notEmpty().withMessage('Username is required'),
 	check('password').isString().isLength({min: 6}).withMessage('Password must be at least 6 characters'),
 	check('confirmPassword').isString().isLength({min: 6}).withMessage('Confirm Password must be at least 6 characters'),
@@ -38,14 +70,33 @@ signup.post(
 				return res.status(400).json({error: 'User already exists'});
 			}
 
+			const {file} = req;
+
+			if (!file?.originalname || !file.buffer) {
+				return res.status(400).json({error: 'Invalid file data'});
+			}
+
+			const processedFile = await sharp(file.buffer)
+				.resize(500, 500)
+				.toFormat('png')
+				.png({quality: 75})
+				.toBuffer();
+
+			const data = await s3.upload({
+				Bucket: 'zynqa',
+				Key: file?.originalname,
+				Body: processedFile,
+				ACL: 'public-read',
+			}).promise();
+
 			const newUser = await queryDatabase(`
 				INSERT INTO zynqa_users(
-					username, username_lower_case, password
+					username, username_lower_case, password, profile_picture_url
 				)VALUES(
-					$1, $2, $3
-				) RETURNING user_id, username, followers, following, friends,
+					$1, $2, $3, $4
+				) RETURNING user_id, username, profile_picture_url, followers, following, friends,
 					posts, likes, comments, created_at, last_online;
-			`, [username, username.toLowerCase(), hashedPassword]);
+			`, [username, username.toLowerCase(), hashedPassword, data.Location]);
 
 			if (newUser.rows[0]) {
 				const user: User = newUser.rows[0] as User;

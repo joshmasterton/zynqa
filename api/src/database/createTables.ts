@@ -21,6 +21,7 @@ export const createUsersTable = async () => {
 				username VARCHAR(60),
 				username_lower_case VARCHAR(60),
 				password VARCHAR(60),
+				profile_picture_url VARCHAR(255),
 				followers INT DEFAULT 0,
 				following INT DEFAULT 0,
 				friends INT DEFAULT 0,

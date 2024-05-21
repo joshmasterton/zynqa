@@ -35,9 +35,9 @@ html.light #lightMode {
 }
 
 #lightMode > button.left {
-	transform: translateX( - calc(App.$padSmall * 2));
+	transform: translateX( - calc(App.$width / 4));
 }
 
 #lightMode > button.right {
-	transform: translateX(calc(App.$padSmall * 2));
+	transform: translateX(calc(App.$width / 4));
 }

@@ -69,14 +69,16 @@ html.light *::placeholder {
 
 html.dark *:focus, html.dark a:hover, html.dark a:focus,
 html.dark button:hover, html.dark button:focus,
-html.dark input:hover, html.dark input:focus {
+html.dark input:hover, html.dark input:focus, html.dark .file:hover,
+html.dark .file:focus {
 	outline: $outline $darkSubtle;
 	box-shadow: $shadowPrimary;
 }
 
 html.light *:focus, html.light a:hover, html.light a:focus,
 html.light button:hover, html.light button:focus,
-html.light input:hover, html.light input:focus {
+html.light input:hover, html.light input:focus, html.light .file:hover,
+html.light .file:focus {
 	outline: $outline $light;
 	box-shadow: $shadowPrimary;
 }
@@ -98,6 +100,10 @@ html.light {
 	background: $light;
 }
 
+::-webkit-scrollbar {
+	display: none;
+}
+
 button, label, input, a {
 	display: flex;
 	justify-content: center;
@@ -106,7 +112,7 @@ button, label, input, a {
 	width: 100%;
 	padding: $pad;
 	transition: outline-color $animationNormal, box-shadow $animationNormal;
-}
+};
 
 button {
 	width: 100%;
@@ -145,6 +151,37 @@ label > svg {
 	pointer-events: none;
 }
 
+label.file {
+	cursor: pointer;
+	display: flex;
+	height: $height;
+	overflow: hidden;
+}
+
+html.dark label.file {
+	background: $darkBright;
+}
+
+html.light label.file {
+	background: $lightBright;
+}
+
+label.file > svg {
+	position: absolute;
+	left: auto;
+	bottom: auto;
+	pointer-events: none;
+}
+
+label.file > img {
+	width: $height;
+	height: $height;
+	align-self: flex-end;
+}
+
+input[type='file'] {
+	display: none;
+}
 
 input {
 	width: 100%;
@@ -164,6 +201,7 @@ html.light input {
 img {
 	width: $width;
 	height: $width;
+	object-fit: cover;
 }
 
 svg {

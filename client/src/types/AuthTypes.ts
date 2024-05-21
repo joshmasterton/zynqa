@@ -6,6 +6,7 @@ export type AuthDetails = {
 	username: string;
 	password: string;
 	confirmPassword?: string;
+	profilePicture?: File;
 };
 
 export type ShowPasswords = {
@@ -19,6 +20,7 @@ export type User = {
 	followers: number;
 	following: number;
 	friends: number;
+	profile_picture_url: string;
 	posts: number;
 	likes: number;
 	comments: number;
