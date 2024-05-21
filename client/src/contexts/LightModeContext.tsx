@@ -2,7 +2,7 @@ import {createContext, useContext, useState} from 'react';
 import {
 	type LightModeContextType,
 	type LightModeProviderProps,
-} from '../types/LightModeContextTypes';
+} from '../types/ContextTypes';
 import {BsMoonFill, BsSunFill} from 'react-icons/bs';
 import './styles/LightModeContext.scss';
 
@@ -54,7 +54,7 @@ export const useLightMode = () => {
 	const context = useContext(LightModeContext);
 
 	if (!context) {
-		throw new Error('LightModeContext must be used within LightModeProvider');
+		throw new Error('useLightMode must be used within LightModeProvider');
 	}
 
 	return context;

@@ -24,7 +24,7 @@ html.light #auth {
 }
 
 #auth #lightMode {
-	position: absolute;
+	position: fixed;
 	top: App.$pad;
 	right: App.$pad;
 	align-self: flex-end;
@@ -49,8 +49,19 @@ html.light #auth {
 #auth > main .authLabel, #auth > main .authLabel > label {
 	position: relative;
 	display: flex;
-	gap: calc(App.$padSmall / 2);
 	width: 100%;
+	gap: calc(App.$pad / 3);
+}
+
+#auth > main > div:first-of-type {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: calc(App.$pad / 3);
+}
+
+#auth > main > div:first-of-type > div {
+	font-size: App.$fontSmall;
 }
 
 #auth > main label div {

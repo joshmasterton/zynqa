@@ -1,5 +1,7 @@
 import {type Routes} from './types/AppTypes';
 import {RouterProvider, createBrowserRouter} from 'react-router-dom';
+import {UserProvider} from './contexts/UserContext';
+import {Popup, PopupProvider} from './contexts/PopupContext';
 import {LightModeProvider} from './contexts/LightModeContext';
 import {Auth} from './pages/Auth';
 import './styles/App.scss';
@@ -19,8 +21,13 @@ const router = createBrowserRouter(routes);
 
 export function App() {
 	return (
-		<LightModeProvider>
-			<RouterProvider router={router}/>
-		</LightModeProvider>
+		<UserProvider>
+			<PopupProvider>
+				<LightModeProvider>
+					<Popup/>
+					<RouterProvider router={router}/>
+				</LightModeProvider>
+			</PopupProvider>
+		</UserProvider>
 	);
 }
