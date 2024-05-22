@@ -20,7 +20,8 @@ export const createUsersTable = async () => {
 				user_id SERIAL PRIMARY KEY,
 				username VARCHAR(60),
 				username_lower_case VARCHAR(60),
-				password VARCHAR(60),
+				email VARCHAR(255),
+				password VARCHAR(255),
 				profile_picture_url VARCHAR(255),
 				followers INT DEFAULT 0,
 				following INT DEFAULT 0,
@@ -39,5 +40,34 @@ export const createUsersTable = async () => {
 		}
 
 		throw error;
+	}
+};
+
+export const dropResetPasswordTable = async () => {
+	try {
+		await queryDatabase('DROP TABLE IF EXISTS zynqa_reset_password_tokens');
+		console.log('Reset password table successfully dropped');
+	} catch (error) {
+		if (error instanceof Error) {
+			console.error(error.message);
+		}
+	}
+};
+
+export const createResetPasswordTable = async () => {
+	try {
+		await queryDatabase(`
+			CREATE TABLE IF NOT EXISTS zynqa_reset_password_tokens(
+				reset_password_id SERIAL PRIMARY KEY,
+				token VARCHAR(255),
+				email VARCHAR(255),
+				expiration_timestamp TIMESTAMPTZ NOT NULL
+			);
+		`);
+		console.log('Reset password table successfully created');
+	} catch (error) {
+		if (error instanceof Error) {
+			console.error(error.message);
+		}
 	}
 };

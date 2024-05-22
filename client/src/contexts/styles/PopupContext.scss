@@ -2,6 +2,7 @@
 
 #popup {
 	position: fixed;
+	top: 0;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -13,7 +14,7 @@
 }
 
 #popup.open {
-	transform: translateY(0%);
+	transform: translateY(0);
 }
 
 #popup.closed {
@@ -50,7 +51,7 @@
 }
 
 html.dark #popup > div {
-	background: App.$darkSubtle;
+	background: App.$darkBright;
 }
 
 html.light #popup > div {

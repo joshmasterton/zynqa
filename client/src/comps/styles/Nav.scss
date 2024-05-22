@@ -1,0 +1,174 @@
+@use '../../styles/App';
+
+#nav {
+	position: fixed;
+	width: 100%;
+}
+
+#nav > header {
+	position: fixed;
+	top: 0;
+	display: flex;
+	justify-content: space-between;
+	padding: App.$pad;
+	overflow: scroll;
+	gap: App.$pad;
+	height: calc(App.$height + calc(App.$pad * 2));
+	width: 100%;
+}
+
+html.dark #nav > header,
+html.dark #nav > main {
+	background: App.$darkSubtle;
+}
+
+html.light #nav > header,
+html.light #nav > main {
+	background: App.$lightSubtle;
+}
+
+#nav > header > ul {
+	display: none;
+	justify-content: end;
+	gap: App.$pad;
+	flex: 1;
+}
+
+#nav > header > ul > li {
+	max-width: App.$width;
+}
+
+#nav > header > button {
+	max-width: App.$height;
+	padding: 0;
+	color: inherit;
+	background: transparent;
+}
+
+#nav > main {
+	display: none;
+	position: fixed;
+	overflow: scroll;
+	top: 0;
+	margin-top: calc(App.$height + (App.$pad * 2));
+}
+
+#nav > footer {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	margin-top: calc(App.$height + calc(App.$pad * 2));
+	transition: transform App.$animationNormal;
+	z-index: -1;
+}
+
+#nav > footer.closed {
+	transform: translateY( - calc((App.$height * 7.5) - App.$pad));
+}
+
+#nav > footer > ul {
+	display: flex;
+	flex-direction: column;
+	justify-content: end;
+	align-items: end;
+	padding: App.$pad;
+	padding-top: calc(App.$pad / 4);
+	gap: App.$pad;
+}
+
+html.dark #nav > footer > ul {
+	background: App.$darkSubtle;
+}
+
+html.light #nav > footer > ul {
+	background: App.$lightSubtle;
+}
+
+#nav > footer > ul > li {
+	width: 100%;
+}
+
+#nav > footer > ul > li > a,
+#nav > footer > ul > li > button {
+	display: flex;
+	justify-content: start;
+	padding-left: 0;
+	color: inherit;
+	background: transparent;
+}
+
+@media screen and (min-width: App.$widthMax) {
+	#nav {
+		position: static;
+	}
+
+	#nav > main {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		padding: App.$pad;
+		padding-top: 0;
+		gap: App.$pad;
+		height: calc(100% - (App.$height + (App.$pad * 2)));
+		width: calc((App.$height * 5) + calc(App.$pad * 2));
+		border-radius: 0;
+	}
+
+	#nav > main > img {
+		display: none;
+	}
+
+	#nav > main > ul {
+		display: flex;
+		flex-direction: column;
+		justify-content: start;
+		align-items: end;
+		gap: App.$pad;
+		flex: 1;
+	}
+	
+	#nav > main > ul > li {
+		width: 100%;
+		max-width: 100%;
+	}
+
+	#nav > main > ul > li:first-of-type {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	#nav > main > ul > li img {
+		margin-bottom: App.$pad;
+	}
+
+	#nav > main > ul > li a,
+	#nav > main > ul > li button {
+		display: flex;
+		justify-content: start;
+		width: 100%;
+		max-width: 100%;
+		padding-left: 0;
+		color: inherit;
+		background: transparent;
+	}
+
+	#nav > main > ul > li:last-of-type {
+		flex: 1;
+	}
+	
+	#nav > main > button {
+		display: none;
+	}
+
+	#nav > footer {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		margin-top: calc(App.$height + calc(App.$pad * 2));
+	}
+	
+}

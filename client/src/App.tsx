@@ -3,17 +3,54 @@ import {RouterProvider, createBrowserRouter} from 'react-router-dom';
 import {UserProvider} from './contexts/UserContext';
 import {Popup, PopupProvider} from './contexts/PopupContext';
 import {LightModeProvider} from './contexts/LightModeContext';
+import {ProtectedRoute} from './comps/ProtectedRoute';
+import {PublicRoute} from './comps/PublicRoute';
+import {ResetPassword} from './pages/ResetPassword';
+import {ForgotPassword} from './pages/ForgotPassword';
+import {Nav} from './comps/Nav';
 import {Auth} from './pages/Auth';
 import './styles/App.scss';
 
 export const routes: Routes[] = [
 	{
 		path: '/*',
-		element: <Auth isLogin/>,
+		element: (
+			<ProtectedRoute>
+				<Nav/>
+			</ProtectedRoute>
+		),
+	},
+	{
+		path: '/login',
+		element: (
+			<PublicRoute>
+				<Auth isLogin/>
+			</PublicRoute>
+		),
 	},
 	{
 		path: '/signup',
-		element: <Auth isLogin={false}/>,
+		element: (
+			<PublicRoute>
+				<Auth isLogin={false}/>
+			</PublicRoute>
+		),
+	},
+	{
+		path: '/forgotPassword',
+		element: (
+			<PublicRoute>
+				<ForgotPassword/>
+			</PublicRoute>
+		),
+	},
+	{
+		path: '/resetPassword',
+		element: (
+			<PublicRoute>
+				<ResetPassword/>
+			</PublicRoute>
+		),
 	},
 ];
 

@@ -1,8 +1,8 @@
 import './styles/Loading.scss';
 
-export function Loading() {
+export function Loading({isBackground = false}: {isBackground?: boolean}) {
 	return (
-		<div id='loading'>
+		<div id='loading' className={isBackground ? 'background' : 'transparent'}>
 			<div>
 				<div/>
 			</div>

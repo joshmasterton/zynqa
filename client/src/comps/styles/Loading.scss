@@ -5,9 +5,22 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: App.$width;
-	height: App.$height;
+	width: 100%;
+	height: 100%;
+}
+
+#loading.background {
 	background: App.$primaryGradient;
+}
+
+html.dark #loading.transparent,
+html.dark #loading.transparent > div > div {
+	background: App.$dark;
+}
+
+html.light #loading.transparent,
+html.light #loading.transparent > div > div {
+	background: App.$light;
 }
 
 #loading > div {

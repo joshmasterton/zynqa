@@ -4,11 +4,13 @@ import {compare} from 'bcryptjs';
 import {check, validationResult} from 'express-validator';
 import {queryDatabase} from '../../database/initializeDatabase.ts';
 import {generateAccessToken, generateRefreshToken} from '../../token/generateToken.ts';
+import {limiter} from '../../utilities/rateLimiter.ts';
 
 export const login = express.Router();
 
 login.post(
 	'/',
+	limiter,
 	check('username').isString().notEmpty().withMessage('Username is required'),
 	check('password').isString().isLength({min: 6}).withMessage('Password must be at least 6 characters'),
 	async (req, res) => {
@@ -39,7 +41,7 @@ login.post(
 			}
 
 			const userFromDatabase = await queryDatabase(`
-				SELECT user_id, username, followers, following, friends, profile_picture_url,
+				SELECT user_id, username, email, followers, following, friends, profile_picture_url,
 				posts, likes, comments, created_at, last_online FROM zynqa_users
 				WHERE username = $1
 			`, [username]);

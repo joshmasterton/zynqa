@@ -19,6 +19,11 @@ html.light #lightMode {
 	background: App.$lightSubtle;
 }
 
+html.light #nav #lightMode {
+	outline: App.$outline App.$lightBright;
+	background: App.$lightBright;
+}
+
 #lightMode > button {
 	width: calc(App.$height / 1.15);
 	height: calc(App.$height / 1.15);

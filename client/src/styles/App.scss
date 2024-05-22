@@ -1,18 +1,18 @@
 // Themes
-$primary: rgb(43, 112, 215);
+$primary: #4A6DC8;
 $primaryGradient: linear-gradient(
 	45deg,
-	rgb(43, 112, 215),
-	rgb(99, 30, 248)
+	#4A6DC8,
+	#3F5AA0,
 );
 
 // Dark
-$dark: rgb(14, 14, 16);
+$dark: rgb(10, 10, 12);
 $darkSubtle: rgb(21, 21, 27);
-$darkBright: rgb(25, 25, 33);
+$darkBright: rgb(28, 28, 37);
 
 // Light
-$light: rgb(245, 245, 250);
+$light: rgb(240, 240, 245);
 $lightSubtle: rgb(255, 255, 255);
 $lightBright: $light;
 
@@ -90,6 +90,8 @@ html, body {
 #root {
 	display: flex;
 	justify-content: center;
+	align-items: center;
+	min-height: 100%;
 }
 
 html.dark {
@@ -199,9 +201,17 @@ html.light input {
 }
 
 img {
-	width: $width;
-	height: $width;
+	height: 100%;
 	object-fit: cover;
+}
+
+.logo {
+	height: $height;
+}
+
+#auth .logo {
+	position: absolute;
+	top: - $height * 2;
 }
 
 svg {
