@@ -1,0 +1,192 @@
+@use '../../styles/App';
+
+#nav {
+	position: fixed;
+	width: 100%;
+}
+
+#nav > header {
+	position: fixed;
+	top: 0;
+	padding: App.$pad;
+	overflow: scroll;
+	width: 100%;
+}
+
+#nav > header > div > img:last-of-type {
+	display: none;
+}
+
+#nav > header > div {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: calc(App.$height + (App.$pad * 2));
+	padding: App.$pad;
+	gap: App.$pad;
+}
+
+html.dark #nav > header > div,
+html.dark #nav > main > ul,
+html.dark #nav > footer > ul {
+	background: App.$darkSubtle;
+}
+
+html.light #nav > header > div,
+html.light #nav > main > ul,
+html.light #nav > footer > ul {
+	background: App.$lightSubtle;
+}
+
+#nav > header > div > ul {
+	display: none;
+	justify-content: end;
+	gap: App.$pad;
+	flex: 1;
+}
+
+#nav > header > div > ul > li {
+	max-width: App.$width;
+}
+
+#nav > header > div > button {
+	max-width: App.$height;
+	padding: 0;
+	color: inherit;
+	background: transparent;
+}
+
+#nav > main {
+	display: none;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+#nav > footer {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: App.$pad;
+	margin-top: calc(App.$height + calc(App.$pad * 3));
+	transition: transform App.$animationNormal;
+	z-index: -1;
+}
+
+#nav > footer.closed {
+	transform: translateY( - calc((App.$height * 11) - (App.$pad * 2)));
+}
+
+#nav > footer > ul {
+	display: flex;
+	flex-direction: column;
+	justify-content: end;
+	align-items: end;
+	padding: App.$pad;
+	gap: App.$pad;
+}
+
+#nav > footer > ul > li {
+	width: 100%;
+}
+
+#nav > footer > ul > li > a,
+#nav > footer > ul > li > button {
+	display: flex;
+	justify-content: start;
+	padding-left: 0;
+	color: inherit;
+	background: transparent;
+}
+
+@media screen and (min-width: App.$widthMax) {
+	#nav {
+		position: static;
+	}
+
+	#nav > header > div > button {
+		display: none;
+	}
+
+	#nav > header > div > img:first-of-type {
+		display: none;
+	}
+
+	#nav > header > div > img:last-of-type {
+		display: flex;
+	}
+
+	#nav > main {
+		position: fixed;
+		top: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		overflow: scroll;
+		gap: App.$pad;
+		padding-bottom: App.$pad;
+		margin: App.$pad;
+		margin-top: calc(App.$height + (App.$pad * 4));
+		height: calc(100% - (App.$height + (App.$pad * 4)));
+		width: calc((App.$height * 5) + calc(App.$pad * 2));
+	}
+
+	#nav > main > img {
+		display: none;
+	}
+
+	#nav > main > ul {
+		display: flex;
+		flex-direction: column;
+		justify-content: start;
+		align-items: end;
+		padding: App.$pad;
+		gap: App.$pad;
+		flex: 1;
+	}
+	
+	#nav > main > ul > li {
+		width: 100%;
+		max-width: 100%;
+	}
+
+	#nav > main > ul > li:first-of-type {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	#nav > main > ul > li img {
+		margin-bottom: App.$pad;
+	}
+
+	#nav > main > ul > li a,
+	#nav > main > ul > li button {
+		display: flex;
+		justify-content: start;
+		width: 100%;
+		max-width: 100%;
+		padding-left: 0;
+		color: inherit;
+		background: transparent;
+	}
+
+	#nav > main > ul > li:last-of-type {
+		flex: 1;
+	}
+	
+	#nav > main > button {
+		display: none;
+	}
+
+	#nav > footer {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		margin-top: calc(App.$height + calc(App.$pad * 2));
+	}
+	
+}

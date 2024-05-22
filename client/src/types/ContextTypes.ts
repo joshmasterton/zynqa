@@ -23,6 +23,7 @@ export type PopupProviderProps = {
 
 export type UserContextType = {
 	user: User | undefined;
+	setUser: Dispatch<SetStateAction<User | undefined>>;
 };
 
 export type UserProviderProps = {

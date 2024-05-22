@@ -1,6 +1,7 @@
 @use '../../styles/App';
 
 #auth {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -58,6 +59,15 @@ html.light #auth {
 	display: flex;
 	flex-direction: column;
 	gap: calc(App.$pad / 3);
+}
+
+#auth > main > a {
+	height: fit-content;
+	width: fit-content;
+	align-self: end;
+	font-size: App.$fontSmall;
+	padding: 0;
+	background: transparent;
 }
 
 #auth > main > div:first-of-type > div {

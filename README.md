@@ -1,7 +1,7 @@
 # Zynqa - Connect, Share, Discover
 
 <div style="width: 100%; text-align: center;">
-  <img src="public/zynqa_logo.png" alt="Zynqa Logo" style="width: 200px;" />
+  <img src="public/zynqa_logo.png" alt="Zynqa Logo" style="width: 100px;" />
 </div>
 
 Zynqa is a dynamic community platform designed for sharing ideas, sparking discussions, and discovering new perspectives. Join the conversation and explore a vibrant space where your voice matters.

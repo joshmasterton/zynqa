@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {type Request, type Response, type NextFunction} from 'express';
 import {type JwtPayload, type AuthRequest, type User} from '../types/authTypes';
-import jwt from 'jsonwebtoken';
+import {queryDatabase} from '../database/initializeDatabase';
 import {generateAccessToken} from './generateToken';
+import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config({path: 'src/.env'});
 
@@ -24,7 +25,7 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
 			return res.status(401).json({error: 'Invalid token format'});
 		}
 
-		jwt.verify(accessToken, JWT_SECRET, (error, decoded) => {
+		jwt.verify(accessToken, JWT_SECRET, async (error, decoded) => {
 			if (error) {
 				if (error.name === 'TokenExpiredError') {
 					jwt.verify(refreshToken, JWT_SECRET, async (refreshError, refreshDecoded) => {
@@ -34,9 +35,20 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
 
 						const {iat, exp, ...decodedUser} = refreshDecoded as JwtPayload;
 						const user = decodedUser as User;
+
+						const existingUser = await queryDatabase(`
+							SELECT username FROM zynqa_users
+							WHERE username = $1
+						`, [user.username]);
+
+						if (!existingUser.rows[0]) {
+							return res.status(401).json({error: 'No user present'});
+						}
+
 						const newAccessToken = await generateAccessToken(user);
 
 						res.cookie('accessToken', newAccessToken, {httpOnly: true, maxAge: 3600000, sameSite: 'strict'});
+						res.cookie('accessToken', refreshToken, {httpOnly: true, maxAge: 3600000, sameSite: 'strict'});
 						(req as AuthRequest).user = user;
 						next();
 					});
@@ -45,7 +57,20 @@ export const verifyToken = async (req: Request, res: Response, next: NextFunctio
 				}
 			} else {
 				const {iat, exp, ...decodedUser} = decoded as JwtPayload;
-				(req as AuthRequest).user = decodedUser as User;
+				const user = decodedUser as User;
+
+				const existingUser = await queryDatabase(`
+					SELECT password FROM zynqa_users
+					WHERE username = $1
+				`, [user.username]);
+
+				if (!existingUser.rows[0]) {
+					return res.status(401).json({error: 'No user present'});
+				}
+
+				res.cookie('accessToken', accessToken, {httpOnly: true, maxAge: 3600000, sameSite: 'strict'});
+				res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 3600000, sameSite: 'strict'});
+				(req as AuthRequest).user = user;
 				next();
 			}
 		});

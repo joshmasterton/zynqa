@@ -9,6 +9,7 @@ import {check, validationResult} from 'express-validator';
 import {queryDatabase} from '../../database/initializeDatabase.ts';
 import {generateAccessToken, generateRefreshToken} from '../../token/generateToken.ts';
 import sharp from 'sharp';
+import {limiter} from '../../utilities/rateLimiter.ts';
 dotenv.config({path: 'src/.env'});
 
 export const signup = express.Router();
@@ -40,10 +41,12 @@ const s3 = new aws.S3();
 
 signup.post(
 	'/',
+	limiter,
 	upload.single('profilePicture'),
 	check('username').isString().notEmpty().withMessage('Username is required'),
+	check('email').isEmail().withMessage('Muse be valid email type').notEmpty().withMessage('Muse be valid email type'),
 	check('password').isString().isLength({min: 6}).withMessage('Password must be at least 6 characters'),
-	check('confirmPassword').isString().isLength({min: 6}).withMessage('Confirm Password must be at least 6 characters'),
+	check('confirmPassword').isString().isLength({min: 6}).withMessage('Confirm password must be at least 6 characters'),
 	async (req, res) => {
 		const validationErrors = validationResult(req);
 
@@ -52,7 +55,7 @@ signup.post(
 			return res.status(400).json({error: validatoinErrorMessage});
 		}
 
-		const {username, password, confirmPassword} = req.body as AuthDetails;
+		const {username, email, password, confirmPassword} = req.body as AuthDetails;
 
 		if (password !== confirmPassword) {
 			return res.status(400).json({error: 'Passwords need to match'});
@@ -78,25 +81,29 @@ signup.post(
 
 			const processedFile = await sharp(file.buffer)
 				.resize(500, 500)
-				.toFormat('png')
-				.png({quality: 75})
+				.toFormat('jpeg')
+				.jpeg({quality: 35})
 				.toBuffer();
+
+			const timestamp = Date.now();
+			const fileExtension = '.png';
+			const key = `${file.originalname}-${timestamp}${fileExtension}`;
 
 			const data = await s3.upload({
 				Bucket: 'zynqa',
-				Key: file?.originalname,
+				Key: key,
 				Body: processedFile,
 				ACL: 'public-read',
 			}).promise();
 
 			const newUser = await queryDatabase(`
 				INSERT INTO zynqa_users(
-					username, username_lower_case, password, profile_picture_url
+					username, username_lower_case, email, password, profile_picture_url
 				)VALUES(
-					$1, $2, $3, $4
-				) RETURNING user_id, username, profile_picture_url, followers, following, friends,
+					$1, $2, $3, $4, $5
+				) RETURNING user_id, username, email, profile_picture_url, followers, following, friends,
 					posts, likes, comments, created_at, last_online;
-			`, [username, username.toLowerCase(), hashedPassword, data.Location]);
+			`, [username, username.toLowerCase(), email, hashedPassword, data.Location]);
 
 			if (newUser.rows[0]) {
 				const user: User = newUser.rows[0] as User;
