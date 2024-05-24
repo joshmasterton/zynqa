@@ -13,6 +13,20 @@
 	background: App.$primaryGradient;
 }
 
+#loading.transparent > div {
+	background: conic-gradient(
+		transparent,
+		App.$primary,
+	);
+}
+
+#loading.transparentSubtle > div {
+	background: conic-gradient(
+		transparent,
+		App.$primary,
+	);
+}
+
 html.dark #loading.transparent,
 html.dark #loading.transparent > div > div {
 	background: App.$dark;
@@ -21,6 +35,16 @@ html.dark #loading.transparent > div > div {
 html.light #loading.transparent,
 html.light #loading.transparent > div > div {
 	background: App.$light;
+}
+
+html.dark #loading.transparentSubtle,
+html.dark #loading.transparentSubtle > div > div {
+	background: App.$darkSubtle;
+}
+
+html.light #loading.transparentSubtle,
+html.light #loading.transparentSubtle > div > div {
+	background: App.$lightSubtle;
 }
 
 #loading > div {
