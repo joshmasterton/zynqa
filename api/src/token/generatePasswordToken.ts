@@ -1,7 +1,7 @@
+import {type TokenResult} from '../types/authTypes';
 import crypto from 'crypto';
 import {queryDatabase} from '../database/initializeDatabase';
 import {hash} from 'bcryptjs';
-import {type TokenResult} from '../types/authTypes';
 
 export const generateResetPasswordToken = async (email: string): Promise<string> => new Promise((resolve, reject) => {
 	crypto.randomBytes(20, async (error, buffer) => {
@@ -31,12 +31,12 @@ export const generateResetPasswordToken = async (email: string): Promise<string>
 
 			// Insert the token into the database
 			await queryDatabase(`
-          INSERT INTO zynqa_reset_password_tokens(
-            token, email, expiration_timestamp
-          ) VALUES (
-            $1, $2, $3
-          )
-        `, [hashedToken, email, tokenExpiration]);
+				INSERT INTO zynqa_reset_password_tokens(
+					token, email, expiration_timestamp
+				) VALUES (
+					$1, $2, $3
+				)
+			`, [hashedToken, email, tokenExpiration]);
 
 			// Resolve the promise with the token
 			resolve(token);
