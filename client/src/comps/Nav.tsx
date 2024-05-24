@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom';
 import {useState} from 'react';
 import {useUser} from '../contexts/UserContext';
 import {request} from '../requests/requests';
+import {Loading} from './Loading';
 import {LightMode, useLightMode} from '../contexts/LightModeContext';
 import {BiMenu} from 'react-icons/bi';
 import logoLight from '../styles/zynqa_logo_light.png';
@@ -14,6 +15,7 @@ import './styles/Nav.scss';
 export function Nav() {
 	const {user, setUser} = useUser();
 	const {lightMode} = useLightMode();
+	const [loading, setLoading] = useState<boolean>(false);
 	const [isMenu, setIsMenu] = useState<boolean>(false);
 
 	const handleIsMenu = () => {
@@ -21,13 +23,20 @@ export function Nav() {
 	};
 
 	const logout = async () => {
+		if (loading) {
+			return;
+		}
+
 		try {
+			setLoading(true);
 			await request('/logout', 'GET');
 			setUser(undefined);
 		} catch (error) {
 			if (error instanceof Error) {
 				console.error(error.message);
 			}
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -75,38 +84,38 @@ export function Nav() {
 			</header>
 			<main>
 				<ul>
-					<li>
-						<img src={user?.profile_picture_url} alt='ProfilePicture' />
-						<div>{user?.username}</div>
-						<p>{user?.email}</p>
-					</li>
-					<li>
-						<Link to='/'>
-							<RiMessage3Fill/>
-							Posts
-						</Link>
-					</li>
-					<li>
-						<Link to='/'>
-							<RiGroup3Fill/>
-							Friends
-						</Link>
-					</li>
-					<li>
-						<Link to='/'>
-							<RiUser3Fill/>
-							Profile
-						</Link>
-					</li>
-					<li>
-						<button type='button' onClick={async () => {
-							await logout();
-						}}>
-							<RiLogoutBoxFill/>
-							Logout
-						</button>
-					</li>
-					<LightMode/>
+					{loading ? <Loading isSubtle/> : (
+						<>
+							<li>
+								<img src={user?.profile_picture_url} alt='ProfilePicture' />
+								<div>{user?.username}</div>
+								<p>{user?.email}</p>
+							</li><li>
+								<Link to='/'>
+									<RiMessage3Fill />
+									Posts
+								</Link>
+							</li><li>
+								<Link to='/'>
+									<RiGroup3Fill />
+									Friends
+								</Link>
+							</li><li>
+								<Link to='/'>
+									<RiUser3Fill />
+									Profile
+								</Link>
+							</li><li>
+								<button type='button' onClick={async () => {
+									await logout();
+								} }>
+									<RiLogoutBoxFill />
+									Logout
+								</button>
+							</li>
+							<LightMode />
+						</>
+					)}
 				</ul>
 			</main>
 			<footer className={isMenu ? 'open' : 'closed'}>

@@ -100,7 +100,7 @@ html.light #nav > footer > ul {
 	background: transparent;
 }
 
-@media screen and (min-width: App.$widthMax) {
+@media screen and (min-width: App.$widthMaxLarge) {
 	#nav {
 		position: static;
 	}
