@@ -1,0 +1,39 @@
+@use '../../styles/App';
+
+.profilePicture {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.profilePicture label {
+	height: 100%;
+}
+
+.profilePicture button {
+	display: flex;
+	justify-content: center;
+	width: fit-content;
+	top: App.$padSmall;
+	right: App.$padSmall;
+	padding: 0;
+	color: inherit;
+}
+
+html.dark .profilePicture button {
+	background: App.$darkSubtle;
+}
+
+html.light .profilePicture button {
+	background: App.$lightSubtle;
+}
+
+.profilePicture img {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}

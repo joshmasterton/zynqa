@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import {useState} from 'react';
 import {useUser} from '../contexts/UserContext';
+import {ProfilePicture} from './ProfilePicture';
 import {request} from '../requests/requests';
 import {Loading} from './Loading';
 import {LightMode, useLightMode} from '../contexts/LightModeContext';
@@ -44,7 +45,7 @@ export function Nav() {
 		<div id='nav'>
 			<header>
 				<div>
-					<img src={user?.profile_picture_url} alt='ProfilePicture' />
+					<ProfilePicture user={user}/>
 					<img src={lightMode === 'dark' ? logoLight : logoDark} alt='Logo' />
 					<ul>
 						<li>
@@ -86,8 +87,8 @@ export function Nav() {
 				<ul>
 					{loading ? <Loading isSubtle/> : (
 						<>
+							<ProfilePicture user={user}/>
 							<li>
-								<img src={user?.profile_picture_url} alt='ProfilePicture' />
 								<div>{user?.username}</div>
 								<p>{user?.email}</p>
 							</li><li>

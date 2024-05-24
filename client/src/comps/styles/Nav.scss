@@ -157,12 +157,8 @@ html.light #nav > footer > ul {
 		align-items: center;
 	}
 
-	#nav > main > ul > li img {
-		margin-bottom: App.$pad;
-	}
-
-	#nav > main > ul > li a,
-	#nav > main > ul > li button {
+	#nav > main > ul > li > a,
+	#nav > main > ul > li > button {
 		display: flex;
 		justify-content: start;
 		width: 100%;

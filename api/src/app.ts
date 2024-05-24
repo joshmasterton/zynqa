@@ -11,6 +11,7 @@ import {logout} from './routes/auth/logout.ts';
 import {getUser} from './routes/user/getUser.ts';
 import {forgotPassword} from './routes/auth/forgotPassword.ts';
 import {resetPassword} from './routes/auth/resetPassword.ts';
+import {updateProfile} from './routes/user/updateProfile.ts';
 dotenv.config({path: 'src/.env'});
 
 const app = express();
@@ -43,12 +44,15 @@ createUsersTable()
 	});
 
 // Routes
+
+// Auth
 app.use('/signup', signup);
 app.use('/login', login);
 app.use('/getUser', getUser);
 app.use('/logout', logout);
 app.use('/forgotPassword', forgotPassword);
 app.use('/resetPassword', resetPassword);
+app.use('/updateProfile', updateProfile);
 
 app.listen(PORT, () => {
 	console.log(`Listening to server on port ${PORT}`);
