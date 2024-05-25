@@ -3,6 +3,7 @@ import {type User} from '../types/AuthTypes';
 import {type FormEvent} from 'react';
 import {usePopup} from '../contexts/PopupContext';
 import {request} from '../requests/requests';
+import {Loading} from './Loading';
 import {BiSave} from 'react-icons/bi';
 import './styles/ProfilePicture.scss';
 
@@ -63,7 +64,7 @@ export function ProfilePicture({user}: {user: User | undefined}) {
 			</label>
 			{profilePicture ? (
 				<button type='submit' aria-label='Update Profile Picture'>
-					<BiSave/>
+					{loading ? <Loading isSubtle/> : <BiSave/>}
 				</button>
 			) : null}
 		</form>

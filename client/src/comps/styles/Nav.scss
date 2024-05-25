@@ -5,6 +5,15 @@
 	width: 100%;
 }
 
+#nav > div {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: calc(App.$height + (App.$pad * 3));
+	backdrop-filter: blur(1rem);
+	-webkit-backdrop-filter: blur(1rem);
+}
+
 #nav > header {
 	position: fixed;
 	top: 0;
@@ -96,8 +105,15 @@ html.light #nav > footer > ul {
 	display: flex;
 	justify-content: start;
 	padding-left: 0;
+	padding-right: 0;
 	color: inherit;
 	background: transparent;
+}
+
+#nav > footer > ul > li button > div:first-of-type {
+	display: flex;
+	justify-content: start;
+	width: 100%;
 }
 
 @media screen and (min-width: App.$widthMaxLarge) {
@@ -157,6 +173,12 @@ html.light #nav > footer > ul {
 		align-items: center;
 	}
 
+	#nav > main > ul > li button > div:first-of-type {
+		display: flex;
+		justify-content: start;
+		width: 100%;
+	}
+
 	#nav > main > ul > li > a,
 	#nav > main > ul > li > button {
 		display: flex;
@@ -164,6 +186,7 @@ html.light #nav > footer > ul {
 		width: 100%;
 		max-width: 100%;
 		padding-left: 0;
+		padding-right: 0;
 		color: inherit;
 		background: transparent;
 	}
