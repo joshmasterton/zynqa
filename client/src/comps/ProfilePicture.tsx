@@ -3,6 +3,7 @@ import {type User} from '../types/AuthTypes';
 import {type FormEvent} from 'react';
 import {usePopup} from '../contexts/PopupContext';
 import {request} from '../requests/requests';
+import {Loading} from './Loading';
 import {BiSave} from 'react-icons/bi';
 import './styles/ProfilePicture.scss';
 
@@ -56,10 +57,14 @@ export function ProfilePicture({user}: {user: User | undefined}) {
 				<input type='file' id='profilePicture' onChange={e => {
 					handleFileChange(e);
 				}}/>
-				{profilePicture
-					? <img alt='' src={URL.createObjectURL(profilePicture)}/>
-					: <img src={user?.profile_picture_url} alt='ProfilePicture' />
-				}
+				{loading ? <Loading/> : (
+					<>
+						{profilePicture
+							? <img alt='' src={URL.createObjectURL(profilePicture)}/>
+							: <img src={user?.profile_picture_url} alt='ProfilePicture' />
+						}
+					</>
+				)}
 			</label>
 			{profilePicture ? (
 				<button type='submit' aria-label='Update Profile Picture'>

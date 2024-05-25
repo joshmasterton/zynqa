@@ -1,15 +1,15 @@
 // Themes
-$primary: #4A6DC8;
+$primary: #366ae5;
 $primaryGradient: linear-gradient(
 	45deg,
-	#4A6DC8,
-	#3F5AA0,
+	#366ae5,
+	#2e55b1
 );
 
 // Dark
-$dark: rgb(5, 5, 7);
-$darkSubtle: rgb(21, 21, 27);
-$darkBright: rgb(28, 28, 35);
+$dark: rgb(5, 5, 6);
+$darkSubtle: rgb(16, 16, 21);
+$darkBright: rgb(24, 24, 32);
 
 // Light
 $light: rgb(240, 240, 245);
@@ -39,7 +39,7 @@ $widthMax: 25rem;
 $widthMaxLarge: 35rem;
 
 // Shape
-$round: 0.75rem;
+$round: 0.25rem;
 
 // Animation
 $animationNormal: 0.4s ease;

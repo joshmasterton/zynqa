@@ -5,6 +5,15 @@
 	width: 100%;
 }
 
+#nav > div {
+	position: fixed;
+	width: 100%;
+	height: calc(App.$height + (App.$pad * 3));
+	top: 0;
+	backdrop-filter: blur(1rem);
+	-webkit-backdrop-filter: blur(1rem);
+}
+
 #nav > header {
 	position: fixed;
 	top: 0;
@@ -68,6 +77,9 @@ html.light #nav > footer > ul {
 	top: 0;
 	left: 0;
 	width: 100%;
+	min-height: calc((App.$height * 7) + calc(App.$pad * 3));
+	height: 100%;
+	max-height: calc((App.$height * 7) + calc(App.$pad * 3));
 	padding: App.$pad;
 	margin-top: calc(App.$height + calc(App.$pad * 3));
 	transition: transform App.$animationNormal;

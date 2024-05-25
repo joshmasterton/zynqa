@@ -43,9 +43,10 @@ export function Nav() {
 
 	return (
 		<div id='nav'>
+			<div/>
 			<header>
 				<div>
-					<ProfilePicture user={user}/>
+					<img src={user?.profile_picture_url} alt='ProfilePicture' />
 					<img src={lightMode === 'dark' ? logoLight : logoDark} alt='Logo' />
 					<ul>
 						<li>
@@ -120,35 +121,37 @@ export function Nav() {
 				</ul>
 			</main>
 			<footer className={isMenu ? 'open' : 'closed'}>
-				<ul>
-					<li>
-						<Link to='/'>
-							<RiMessage3Fill/>
-							Posts
-						</Link>
-					</li>
-					<li>
-						<Link to='/'>
-							<RiGroup3Fill/>
-							Friends
-						</Link>
-					</li>
-					<li>
-						<Link to='/'>
-							<RiUser3Fill/>
-							Profile
-						</Link>
-					</li>
-					<li>
-						<button type='button' onClick={async () => {
-							await logout();
-						}}>
-							<RiLogoutBoxFill/>
-							Logout
-						</button>
-					</li>
-					<LightMode/>
-				</ul>
+				{loading ? <Loading isSubtle/> : (
+					<ul>
+						<li>
+							<Link to='/'>
+								<RiMessage3Fill/>
+								Posts
+							</Link>
+						</li>
+						<li>
+							<Link to='/'>
+								<RiGroup3Fill/>
+								Friends
+							</Link>
+						</li>
+						<li>
+							<Link to='/'>
+								<RiUser3Fill/>
+								Profile
+							</Link>
+						</li>
+						<li>
+							<button type='button' onClick={async () => {
+								await logout();
+							}}>
+								<RiLogoutBoxFill/>
+								Logout
+							</button>
+						</li>
+						<LightMode/>
+					</ul>
+				)}
 			</footer>
 		</div>
 	);

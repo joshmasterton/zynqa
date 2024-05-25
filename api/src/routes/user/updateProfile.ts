@@ -51,11 +51,17 @@ updateProfile.post(
 
 			const oldProfilePictureKey = user?.profile_picture_url.split('/').pop();
 
+			console.log(oldProfilePictureKey);
+
 			if (oldProfilePictureKey) {
-				await s3.deleteObject({
-					Bucket: 'zynqa',
-					Key: oldProfilePictureKey,
-				}).promise();
+				try {
+					await s3.deleteObject({
+						Bucket: 'zynqa',
+						Key: oldProfilePictureKey,
+					}).promise();
+				} catch (error) {
+					console.error(error);
+				}
 			}
 
 			if (!file?.originalname || !file.buffer) {
