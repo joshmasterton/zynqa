@@ -216,8 +216,10 @@ img {
 }
 
 svg {
-	height: $height;
-	width: $height;
+	min-height: $height;
+	max-height: $height;
+	min-width: $height;
+	max-width: $height;
 	padding: $padSmall;
 }
 

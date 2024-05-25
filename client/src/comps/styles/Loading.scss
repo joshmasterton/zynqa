@@ -9,6 +9,12 @@
 	height: 100%;
 }
 
+li #loading {
+	min-width: App.$height;
+	max-width: App.$height;
+	min-height: App.$height;
+}
+
 #loading.background {
 	background: App.$primaryGradient;
 }

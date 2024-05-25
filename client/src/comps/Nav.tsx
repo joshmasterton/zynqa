@@ -43,39 +43,11 @@ export function Nav() {
 
 	return (
 		<div id='nav'>
+			<div/>
 			<header>
 				<div>
-					<ProfilePicture user={user}/>
+					<img src={user?.profile_picture_url} alt='ProfilePicture' />
 					<img src={lightMode === 'dark' ? logoLight : logoDark} alt='Logo' />
-					<ul>
-						<li>
-							<Link to='/'>
-								<RiMessage3Fill/>
-								Posts
-							</Link>
-						</li>
-						<li>
-							<Link to='/'>
-								<RiGroup3Fill/>
-								Friends
-							</Link>
-						</li>
-						<li>
-							<Link to='/'>
-								<RiUser3Fill/>
-								Profile
-							</Link>
-						</li>
-						<li>
-							<button type='button' onClick={async () => {
-								await logout();
-							}}>
-								<RiLogoutBoxFill/>
-								Logout
-							</button>
-						</li>
-						<LightMode/>
-					</ul>
 					<button type='button' aria-label='Menu' onClick={() => {
 						handleIsMenu();
 					}}>
@@ -85,38 +57,35 @@ export function Nav() {
 			</header>
 			<main>
 				<ul>
-					{loading ? <Loading isSubtle/> : (
-						<>
-							<ProfilePicture user={user}/>
-							<li>
-								<div>{user?.username}</div>
-								<p>{user?.email}</p>
-							</li><li>
-								<Link to='/'>
-									<RiMessage3Fill />
-									Posts
-								</Link>
-							</li><li>
-								<Link to='/'>
-									<RiGroup3Fill />
-									Friends
-								</Link>
-							</li><li>
-								<Link to='/'>
-									<RiUser3Fill />
-									Profile
-								</Link>
-							</li><li>
-								<button type='button' onClick={async () => {
-									await logout();
-								} }>
-									<RiLogoutBoxFill />
-									Logout
-								</button>
-							</li>
-							<LightMode />
-						</>
-					)}
+					<ProfilePicture user={user}/>
+					<li>
+						<div>{user?.username}</div>
+						<p>{user?.email}</p>
+					</li><li>
+						<Link to='/'>
+							<RiMessage3Fill />
+							Posts
+						</Link>
+					</li><li>
+						<Link to='/'>
+							<RiGroup3Fill />
+							Friends
+						</Link>
+					</li><li>
+						<Link to='/'>
+							<RiUser3Fill />
+							Profile
+						</Link>
+					</li><li>
+						<button type='button' onClick={async () => {
+							await logout();
+						} }>
+							<RiLogoutBoxFill />
+							<div>Logout</div>
+							{loading ? <Loading isSubtle/> : null}
+						</button>
+					</li>
+					<LightMode />
 				</ul>
 			</main>
 			<footer className={isMenu ? 'open' : 'closed'}>
@@ -144,7 +113,8 @@ export function Nav() {
 							await logout();
 						}}>
 							<RiLogoutBoxFill/>
-							Logout
+							<div>Logout</div>
+							{loading ? <Loading isSubtle/> : null}
 						</button>
 					</li>
 					<LightMode/>
