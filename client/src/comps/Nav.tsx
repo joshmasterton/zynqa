@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useUser} from '../contexts/UserContext';
 import {ProfilePicture} from './ProfilePicture';
 import {request} from '../requests/requests';
@@ -41,8 +41,20 @@ export function Nav() {
 		}
 	};
 
+	const handleScroll = () => {
+		setIsMenu(false);
+	};
+
+	useEffect(() => {
+		window.addEventListener('scroll', handleScroll);
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+		};
+	}, []);
+
 	return (
-		<div id='nav'>
+		<nav id='nav'>
 			<div/>
 			<header>
 				<div>
@@ -120,6 +132,6 @@ export function Nav() {
 					<LightMode/>
 				</ul>
 			</footer>
-		</div>
+		</nav>
 	);
 }

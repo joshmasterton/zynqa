@@ -6,6 +6,7 @@ import {queryDatabase} from '../../database/initializeDatabase';
 import {generateResetPasswordToken} from '../../token/generatePasswordToken';
 import nodemailer from 'nodemailer';
 import {limiter} from '../../utilities/rateLimiter';
+import {customSanitizer} from '../../utilities/customSanitizer';
 
 export const forgotPassword = express.Router();
 const {MAILGUN_SMTP_LOGIN, MAILGUN_SMTP_PASSWORD} = process.env;
@@ -22,7 +23,7 @@ const transporter = nodemailer.createTransport({
 forgotPassword.post(
 	'/',
 	limiter,
-	check('email').isEmail().withMessage('Muse be valid email type').notEmpty().withMessage('Must be valid email type'),
+	check('email').customSanitizer(customSanitizer).trim().isEmail().withMessage('Muse be valid email type').notEmpty().withMessage('Must be valid email type'),
 	async (req, res) => {
 		const validationErrors = validationResult(req);
 

@@ -1,20 +1,22 @@
 // Themes
-$primary: #4A6DC8;
+$primary: #3e7bed;
 $primaryGradient: linear-gradient(
 	45deg,
-	#4A6DC8,
-	#3F5AA0,
+	#3e7bed,
+	#6a3eed
 );
 
 // Dark
-$dark: rgb(5, 5, 7);
-$darkSubtle: rgb(21, 21, 27);
-$darkBright: rgb(28, 28, 35);
+$dark: rgb(22, 22, 25);
+$darkSubtle: rgb(26, 26, 31);
+$darkBright: rgb(32, 32, 39);
+$darkShadow: 0 0 0.55rem 0 rgba(0, 0, 0, 0.2);
 
 // Light
 $light: rgb(240, 240, 245);
 $lightSubtle: rgb(255, 255, 255);
 $lightBright: $light;
+$lightShadow: 0 0 0.35rem 0 rgba(0, 0, 0, 0.1);
 
 // Outline
 $outlinePrimary: 0.1rem solid $primary;
@@ -37,9 +39,10 @@ $height: 2.5rem;
 $width: 5rem;
 $widthMax: 25rem;
 $widthMaxLarge: 35rem;
+$widthMaxLargest: 55rem;
 
 // Shape
-$round: 0.75rem;
+$round: 1.5rem;
 
 // Animation
 $animationNormal: 0.4s ease;
@@ -53,7 +56,7 @@ $animationNormal: 0.4s ease;
 }
 
 html.dark {
-	color: $light;
+	color: $lightSubtle;
 }
 
 html.light {
@@ -69,16 +72,16 @@ html.light *::placeholder {
 }
 
 html.dark *:focus, html.dark a:hover, html.dark a:focus,
-html.dark button:hover, html.dark button:focus,
-html.dark input:hover, html.dark input:focus, html.dark .file:hover,
+html.dark button:hover, html.dark button:focus, html.dark textarea:hover,
+html.dark textarea:focus, html.dark input:hover, html.dark input:focus, html.dark .file:hover,
 html.dark .file:focus {
 	outline: $outline $darkSubtle;
 	box-shadow: $shadowPrimary;
 }
 
 html.light *:focus, html.light a:hover, html.light a:focus,
-html.light button:hover, html.light button:focus,
-html.light input:hover, html.light input:focus, html.light .file:hover,
+html.light button:hover, html.light button:focus, html.light textarea:hover,
+html.light textarea:focus, html.light input:hover, html.light input:focus, html.light .file:hover,
 html.light .file:focus {
 	outline: $outline $light;
 	box-shadow: $shadowPrimary;
@@ -107,7 +110,7 @@ html.light {
 	display: none;
 }
 
-button, label, input, a {
+button, label, input, a, textarea {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -115,11 +118,21 @@ button, label, input, a {
 	width: 100%;
 	padding: $pad;
 	transition: outline-color $animationNormal, box-shadow $animationNormal;
-};
+}
 
 button {
 	width: 100%;
-	color: $light;
+	color: $lightSubtle;
+	background: $primaryGradient;
+}
+
+.fixedButton {
+	position: fixed;
+	bottom: calc($pad * 2);
+	right: calc($pad * 2);
+	width: $height;
+	z-index: 1;
+	color: $lightSubtle;
 	background: $primaryGradient;
 }
 
@@ -186,11 +199,20 @@ input[type='file'] {
 	display: none;
 }
 
-input {
+input, textarea {
 	width: 100%;
 	padding-left: $height;
 	outline: $outline transparent;
 	color: inherit;
+}
+
+textarea {
+	display: flex;
+	justify-content: start;
+	align-items: start;
+	text-align: start;
+	padding: $pad;
+	height: auto;
 }
 
 html.dark input {

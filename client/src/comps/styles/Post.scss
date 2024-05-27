@@ -1,0 +1,109 @@
+@use '../../styles/App';
+
+.post {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	min-height: calc((App.$height * 4) + (App.$pad * 2));
+	padding: App.$pad;
+	gap: App.$pad;
+	margin-bottom: App.$pad;
+}
+
+.post:last-of-type {
+	margin-bottom: 0;
+}
+
+html.dark .post {
+	background: App.$darkSubtle;
+	box-shadow: App.$darkShadow;
+}
+
+html.light .post {
+	background: App.$lightSubtle;
+	box-shadow: App.$lightShadow;
+}
+
+.post > header {
+	display: flex;
+	gap: App.$pad;
+}
+
+.post > main {
+	display: flex;
+	flex-direction: column;
+	gap: App.$pad;
+	flex: 1;
+}
+
+.post > main > div {
+	position: relative;
+	height: calc(App.$height * 7);
+	padding: App.$pad;
+	overflow: hidden;
+}
+
+html.dark .post > main > div {
+	background: App.$darkSubtle;
+}
+
+html.light .post > main > div {
+	background: grey;
+}
+
+.post > main > div > img {
+	width: 90%;
+	height: 90%;
+	object-fit: cover;
+}
+
+.post > main > div > img:first-of-type {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	max-width: calc(App.$height * 7);
+	z-index: 1;
+}
+
+.post > main > div > img:last-of-type {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: calc(App.$height * 7);
+	filter: blur(2rem);
+}
+
+.post > header > img {
+	height: App.$height;
+}
+
+.post > footer {
+	display: flex;
+	justify-content: end;
+	flex-wrap: wrap;
+	gap: App.$pad;
+}
+
+.post > footer > button {
+	display: flex;
+	width: fit-content;
+	padding: App.$padSmall;
+	padding-left: 0;
+	color: inherit;
+}
+
+html.dark .post > footer > button {
+	background: App.$darkBright;
+}
+
+html.light .post > footer > button {
+	background: App.$lightBright;
+}
+
+.post > footer > button > svg {
+	min-height: App.$pad;
+	max-width: App.$pad;
+	padding: 0;
+}

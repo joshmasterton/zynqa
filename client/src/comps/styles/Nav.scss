@@ -2,14 +2,19 @@
 
 #nav {
 	position: fixed;
+	top: 0;
+	left: 0;
 	width: 100%;
+	z-index: 2;
 }
 
 #nav > div {
 	position: fixed;
 	top: 0;
+	left: 0;
 	width: 100%;
-	height: calc(App.$height + (App.$pad * 3));
+	height: calc(App.$height + (App.$pad * 2));
+	border-radius: 0;
 	backdrop-filter: blur(1rem);
 	-webkit-backdrop-filter: blur(1rem);
 }
@@ -17,9 +22,11 @@
 #nav > header {
 	position: fixed;
 	top: 0;
+	left: 0;
 	padding: App.$pad;
 	overflow: scroll;
 	width: 100%;
+	z-index: 1;
 }
 
 #nav > header > div > img:last-of-type {
@@ -40,12 +47,14 @@ html.dark #nav > header > div,
 html.dark #nav > main > ul,
 html.dark #nav > footer > ul {
 	background: App.$darkSubtle;
+	box-shadow: App.$darkShadow;
 }
 
 html.light #nav > header > div,
 html.light #nav > main > ul,
 html.light #nav > footer > ul {
 	background: App.$lightSubtle;
+	box-shadow: App.$lightShadow;
 }
 
 #nav > header > div > ul {
@@ -136,16 +145,18 @@ html.light #nav > footer > ul {
 	#nav > main {
 		position: fixed;
 		top: 0;
+		left: 0;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 		overflow: scroll;
 		gap: App.$pad;
-		padding-bottom: App.$pad;
-		margin: App.$pad;
-		margin-top: calc(App.$height + (App.$pad * 4));
-		height: calc(100% - (App.$height + (App.$pad * 4)));
-		width: calc((App.$height * 5) + calc(App.$pad * 2));
+		padding: App.$pad;
+		padding-top: calc(App.$pad * 2);
+		margin-top: calc(App.$height + (App.$pad * 2));
+		height: calc(100% - (App.$height + (App.$pad * 2)));
+		width: 100%;
+		max-width: calc((App.$height * 5) + calc(App.$pad * 4));
 	}
 
 	#nav > main > img {
@@ -153,6 +164,7 @@ html.light #nav > footer > ul {
 	}
 
 	#nav > main > ul {
+		width: 100%;
 		display: flex;
 		flex-direction: column;
 		justify-content: start;

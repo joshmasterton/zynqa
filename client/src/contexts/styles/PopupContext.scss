@@ -53,8 +53,10 @@
 
 html.dark #popup > div {
 	background: App.$darkBright;
+	box-shadow: App.$darkShadow;
 }
 
 html.light #popup > div {
 	background: App.$lightSubtle;
+	box-shadow: App.$lightShadow;
 }

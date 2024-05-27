@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import {createResetPasswordTable, createUsersTable} from './database/createTables.ts';
+import {createPostsTable, createResetPasswordTable, createUsersTable} from './database/createTables.ts';
 import {signup} from './routes/auth/signup.ts';
 import {login} from './routes/auth/login.ts';
 import {logout} from './routes/auth/logout.ts';
@@ -12,6 +12,8 @@ import {getUser} from './routes/user/getUser.ts';
 import {forgotPassword} from './routes/auth/forgotPassword.ts';
 import {resetPassword} from './routes/auth/resetPassword.ts';
 import {updateProfile} from './routes/user/updateProfile.ts';
+import {createPost} from './routes/post/createPost.ts';
+import {getPosts} from './routes/post/getPosts.ts';
 dotenv.config({path: 'src/.env'});
 
 const app = express();
@@ -43,9 +45,14 @@ createUsersTable()
 		}
 	});
 
-// Routes
+createPostsTable()
+	.catch(error => {
+		if (error instanceof Error) {
+			throw error;
+		}
+	});
 
-// Auth
+// Auth routes
 app.use('/signup', signup);
 app.use('/login', login);
 app.use('/getUser', getUser);
@@ -53,6 +60,10 @@ app.use('/logout', logout);
 app.use('/forgotPassword', forgotPassword);
 app.use('/resetPassword', resetPassword);
 app.use('/updateProfile', updateProfile);
+
+// Post routes
+app.use('/createPost', createPost);
+app.use('/getPosts', getPosts);
 
 app.listen(PORT, () => {
 	console.log(`Listening to server on port ${PORT}`);

@@ -7,7 +7,8 @@ import {ProtectedRoute} from './comps/ProtectedRoute';
 import {PublicRoute} from './comps/PublicRoute';
 import {ResetPassword} from './pages/ResetPassword';
 import {ForgotPassword} from './pages/ForgotPassword';
-import {Nav} from './comps/Nav';
+import {Posts} from './pages/Posts';
+import {CreatePost} from './pages/CreatePost';
 import {Auth} from './pages/Auth';
 import './styles/App.scss';
 
@@ -16,7 +17,15 @@ export const routes: Routes[] = [
 		path: '/*',
 		element: (
 			<ProtectedRoute>
-				<Nav/>
+				<Posts/>
+			</ProtectedRoute>
+		),
+	},
+	{
+		path: '/createPost',
+		element: (
+			<ProtectedRoute>
+				<CreatePost/>
 			</ProtectedRoute>
 		),
 	},
