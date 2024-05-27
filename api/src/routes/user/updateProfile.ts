@@ -85,6 +85,12 @@ updateProfile.post(
 				WHERE user_id = $2
 			`, [data.Location, user?.user_id]);
 
+			await queryDatabase(`
+				UPDATE zynqa_posts
+				SET profile_picture_url = $1
+				WHERE username = $2
+			`, [data.Location, user?.username]);
+
 			const updatedUserFromDatabase = await queryDatabase(`
 				SELECT user_id, username, email, followers, following, friends, profile_picture_url,
 				posts, likes, comments, created_at, last_online FROM zynqa_users

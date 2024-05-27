@@ -15,14 +15,12 @@ export function Post({post}: {post: PostType}) {
 			</header>
 			<main>
 				{post?.post}
-				<div>
-					{post?.post_picture && (
-						<>
-							<img alt='Post Picture' src={post?.post_picture}/>
-							<img alt='Post Picture' src={post?.post_picture}/>
-						</>
-					)}
-				</div>
+				{post?.post_picture && (
+					<div>
+						<img alt='Post Picture' src={post?.post_picture}/>
+						<img alt='Post Picture' src={post?.post_picture}/>
+					</div>
+				)}
 			</main>
 			<footer>
 				<button type='button' aria-label='Like'>
