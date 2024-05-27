@@ -11,7 +11,7 @@ import {queryDatabase} from '../../database/initializeDatabase';
 import {generateAccessToken, generateRefreshToken} from '../../token/generateToken';
 dotenv.config();
 
-export const updateProfile = express.Router();
+export const updateProfilePicture = express.Router();
 
 const {AWS_ACCESS_KEY_ID, AWS_ACCESS_KEY_SECRET, AWS_REGION} = process.env;
 const storage = multer.memoryStorage();
@@ -39,7 +39,7 @@ aws.config.update({
 
 const s3 = new aws.S3();
 
-updateProfile.post(
+updateProfilePicture.post(
 	'/',
 	limiter,
 	verifyToken,
@@ -63,9 +63,12 @@ updateProfile.post(
 			}
 
 			const processedFile = await sharp(file.buffer)
-				.resize(500, 500)
+				.resize({
+					width: 1000,
+					withoutEnlargement: true,
+				})
 				.toFormat('jpeg')
-				.jpeg({quality: 35})
+				.jpeg({quality: 75, progressive: true})
 				.toBuffer();
 
 			const timestamp = Date.now();
@@ -84,6 +87,12 @@ updateProfile.post(
 				SET profile_picture_url = $1
 				WHERE user_id = $2
 			`, [data.Location, user?.user_id]);
+
+			await queryDatabase(`
+				UPDATE zynqa_posts
+				SET profile_picture_url = $1
+				WHERE username = $2
+			`, [data.Location, user?.username]);
 
 			const updatedUserFromDatabase = await queryDatabase(`
 				SELECT user_id, username, email, followers, following, friends, profile_picture_url,

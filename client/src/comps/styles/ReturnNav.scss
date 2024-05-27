@@ -1,0 +1,126 @@
+@use '../../styles/App';
+
+#returnNav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: flex;
+	width: 100%;
+	padding: App.$pad;
+	z-index: 1;
+}
+
+#returnNav > div {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: calc(App.$height + (App.$pad * 2));
+	border-radius: 0;
+	backdrop-filter: blur(1rem);
+	-webkit-backdrop-filter: blur(1rem);
+}
+
+#returnNav > header {
+	display: flex;
+	justify-content: space-between;
+	height: calc(App.$height + (App.$pad * 2));
+	width: 100%;
+	padding: App.$pad;
+	z-index: 1;
+}
+
+html.dark #returnNav > header,
+html.dark #returnNav > main > ul {
+	background: App.$darkSubtle;
+	box-shadow: App.$darkShadow;
+}
+
+html.light #returnNav > header,
+html.light #returnNav > main > ul {
+	background: App.$lightSubtle;
+	box-shadow: App.$lightShadow;
+}
+
+#returnNav > header > button {
+	width: App.$height;
+	color: inherit;
+	background: transparent;
+}
+
+#returnNav > main {
+	display: none;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+@media screen and (min-width: App.$widthMaxLarge) {
+	#returnNav > main {
+		position: fixed;
+		top: 0;
+		left: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		overflow: scroll;
+		gap: App.$pad;
+		padding: App.$pad;
+		padding-top: calc(App.$pad * 2);
+		margin-top: calc(App.$height + (App.$pad * 2));
+		height: calc(100% - (App.$height + (App.$pad * 2)));
+		width: 100%;
+		max-width: calc((App.$height * 5) + calc(App.$pad * 4));
+	}
+	
+	#returnNav > main > img {
+		display: none;
+	}
+	
+	#returnNav > main > ul {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: start;
+		align-items: end;
+		padding: App.$pad;
+		gap: App.$pad;
+		flex: 1;
+	}
+	
+	#returnNav > main > ul > li {
+		width: 100%;
+		max-width: 100%;
+	}
+	
+	#returnNav > main > ul > li:first-of-type {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	#returnNav > main > ul > li button > div:first-of-type {
+		display: flex;
+		justify-content: start;
+		width: 100%;
+	}
+	
+	#returnNav > main > ul > li > a,
+	#returnNav > main > ul > li > button {
+		display: flex;
+		justify-content: start;
+		width: 100%;
+		max-width: 100%;
+		padding-left: 0;
+		padding-right: 0;
+		color: inherit;
+		background: transparent;
+	}
+	
+	#returnNav > main > ul > li:last-of-type {
+		flex: 1;
+	}
+	
+	#returnNav > main > button {
+		display: none;
+	}
+}

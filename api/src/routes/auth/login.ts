@@ -5,14 +5,15 @@ import {check, validationResult} from 'express-validator';
 import {queryDatabase} from '../../database/initializeDatabase.ts';
 import {generateAccessToken, generateRefreshToken} from '../../token/generateToken.ts';
 import {limiter} from '../../utilities/rateLimiter.ts';
+import {customSanitizer} from '../../utilities/customSanitizer.ts';
 
 export const login = express.Router();
 
 login.post(
 	'/',
 	limiter,
-	check('username').isString().notEmpty().withMessage('Username is required'),
-	check('password').isString().isLength({min: 6}).withMessage('Password must be at least 6 characters'),
+	check('username').customSanitizer(customSanitizer).trim().isString().notEmpty().withMessage('Username is required'),
+	check('password').customSanitizer(customSanitizer).trim().isString().isLength({min: 6}).withMessage('Password must be at least 6 characters'),
 	async (req, res) => {
 		const validationErrors = validationResult(req);
 
@@ -51,8 +52,8 @@ login.post(
 			const accessToken = await generateAccessToken(user);
 			const refreshToken = await generateRefreshToken(user);
 
-			res.cookie('accessToken', accessToken, {httpOnly: true, maxAge: 3600000, sameSite: 'strict'});
-			res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 3600000, sameSite: 'strict'});
+			res.cookie('accessToken', accessToken, {httpOnly: true, maxAge: 5 * 60 * 1000, sameSite: 'strict'});
+			res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, sameSite: 'strict'});
 
 			return res.status(201).json(user);
 		} catch (error) {

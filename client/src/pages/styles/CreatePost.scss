@@ -1,0 +1,167 @@
+@use '../../styles/App';
+
+#createPost {
+	display: flex;
+	flex-direction: column;
+	align-self: start;
+	justify-content: center;
+	align-items: center;
+	align-self: stretch;
+	width: 100%;
+	min-height: 100%;
+	margin-top: calc(App.$height + (App.$pad * 3));
+	padding: App.$pad;
+}
+
+#createPost > form {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 100%;
+	height: 100%;
+	padding: App.$pad;
+	gap: App.$pad;
+}
+
+html.dark #createPost > form {
+	background: App.$darkSubtle;
+	box-shadow: App.$darkShadow;
+}
+
+html.light #createPost > form {
+	background: App.$lightSubtle;
+	box-shadow: App.$lightShadow;
+}
+
+#createPost > form > label {
+	display: flex;
+	justify-content: space-between;
+	z-index: 0;
+}
+
+#createPost > form > label > textarea {
+	display: flex;
+	justify-content: start;
+	height: auto;
+	min-height: calc(App.$height * 5.6);
+}
+
+#createPost > form > div {
+	display: flex;
+	justify-content: end;
+	flex-wrap: wrap;
+	width: 100%;
+	gap: App.$pad;
+}
+
+#createPost > form > div > div {
+	position: relative;
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	padding: App.$pad;
+	height: App.$height;
+	overflow: hidden;
+	flex: 1;
+}
+
+html.dark #createPost > form > div > div {
+	background: App.$darkBright;
+}
+
+html.light #createPost > form > div > div {
+	background: App.$lightBright;
+}
+
+#createPost > form > div > div > p {
+	z-index: 1;
+}
+
+#createPost > form > div > div > div {
+	position: absolute;
+	left: 0;
+	height: App.$height;
+	background: App.$primaryGradient;
+}
+
+#createPost > form > div > label {
+	min-width: App.$height;
+	width: App.$height;
+}
+
+#createPost > form > div > button {
+	min-width: App.$width;
+	max-width: App.$width;
+}
+
+#createPost > form > #createPostFile {
+	position: relative;
+	width: 100%;
+	height: calc(App.$height * 7);
+	padding: App.$pad;
+	overflow: hidden;	
+}
+
+html.dark #createPost > form > #createPostFile {
+	background: App.$darkSubtle;
+}
+
+html.light #createPost > form > #createPostFile {
+	background: rgb(231, 231, 231);
+}
+
+#createPost > form > #createPostFile > button {
+	position: absolute;
+	top: App.$pad;
+	right: App.$pad;
+	min-width: App.$height;
+	max-width: App.$height;
+	z-index: 1;
+	color: inherit;
+}
+
+html.dark #createPost > form > #createPostFile > button {
+	background: App.$darkSubtle;
+}
+
+html.light #createPost > form > #createPostFile > button {
+	background: App.$lightSubtle;
+}
+
+#createPost > form > #createPostFile > img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+#createPost > form > #createPostFile > img:first-of-type {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	max-width: calc(App.$height * 9);
+	height: calc(100% - (App.$pad * 2));
+	width: calc(100% - (App.$pad * 2));
+	z-index: 1;
+}
+
+#createPost > form > #createPostFile > img:last-of-type {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: calc(App.$height * 7);
+	filter: blur(2rem);
+}
+
+@media screen and (min-width: App.$widthMaxLarge) {
+	#createPost {
+		margin-left: calc((App.$height * 5) + (App.$pad * 3));
+	}
+}
+
+@media screen and (min-width: App.$widthMaxLargest) {
+	#createPost {
+		margin-right: calc((App.$height * 9) + (App.$pad * 3));
+	}
+}

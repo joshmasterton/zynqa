@@ -12,21 +12,29 @@
 html.dark #lightMode {
 	outline: App.$outline App.$darkBright;
 	background: App.$darkBright;
+	box-shadow: App.$darkShadow;
 }
 
 html.light #lightMode {
 	outline: App.$outline App.$lightSubtle;
 	background: App.$lightSubtle;
+	box-shadow: App.$lightShadow;
 }
 
-html.light #nav #lightMode {
+#nav #lightMode,
+#returnNav #lightMode {
+	box-shadow: 0 0 0 0;
+}
+
+html.light #nav #lightMode,
+html.light #returnNav #lightMode {
 	outline: App.$outline App.$lightBright;
 	background: App.$lightBright;
 }
 
 #lightMode > button {
-	width: calc(App.$height / 1.15);
-	height: calc(App.$height / 1.15);
+	width: calc(App.$height / 1.25);
+	height: calc(App.$height / 1.25);
 	padding: 0;
 	transition: App.$animationNormal transform;
 	outline: none;
@@ -34,9 +42,9 @@ html.light #nav #lightMode {
 }
 
 #lightMode > button > svg {
-	width: calc(App.$height / 1.15);
-	height: calc(App.$height / 1.15);
-	padding: calc(App.$padSmall / 1.5);
+	width: calc(App.$height / 1.5);
+	height: calc(App.$height / 1.5);
+	padding: calc(App.$padSmall / 1.1);
 }
 
 #lightMode > button.left {

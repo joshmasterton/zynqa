@@ -10,9 +10,11 @@ import {queryDatabase} from '../../database/initializeDatabase.ts';
 import {generateAccessToken, generateRefreshToken} from '../../token/generateToken.ts';
 import sharp from 'sharp';
 import {limiter} from '../../utilities/rateLimiter.ts';
+import {customSanitizer} from '../../utilities/customSanitizer.ts';
 dotenv.config({path: 'src/.env'});
 
 export const signup = express.Router();
+
 const {AWS_ACCESS_KEY_ID, AWS_ACCESS_KEY_SECRET, AWS_REGION} = process.env;
 const storage = multer.memoryStorage();
 const upload = multer({
@@ -43,10 +45,10 @@ signup.post(
 	'/',
 	limiter,
 	upload.single('profilePicture'),
-	check('username').isString().notEmpty().withMessage('Username is required'),
-	check('email').isEmail().withMessage('Muse be valid email type').notEmpty().withMessage('Muse be valid email type'),
-	check('password').isString().isLength({min: 6}).withMessage('Password must be at least 6 characters'),
-	check('confirmPassword').isString().isLength({min: 6}).withMessage('Confirm password must be at least 6 characters'),
+	check('username').customSanitizer(customSanitizer).trim().isString().notEmpty().withMessage('Username is required'),
+	check('email').customSanitizer(customSanitizer).trim().isEmail().withMessage('Muse be valid email type').notEmpty().withMessage('Muse be valid email type'),
+	check('password').customSanitizer(customSanitizer).trim().isString().isLength({min: 6}).withMessage('Password must be at least 6 characters'),
+	check('confirmPassword').customSanitizer(customSanitizer).trim().isString().isLength({min: 6}).withMessage('Confirm password must be at least 6 characters'),
 	async (req, res) => {
 		const validationErrors = validationResult(req);
 
@@ -80,9 +82,12 @@ signup.post(
 			}
 
 			const processedFile = await sharp(file.buffer)
-				.resize(500, 500)
+				.resize({
+					width: 1000,
+					withoutEnlargement: true,
+				})
 				.toFormat('jpeg')
-				.jpeg({quality: 35})
+				.jpeg({quality: 75, progressive: true})
 				.toBuffer();
 
 			const timestamp = Date.now();
@@ -111,8 +116,8 @@ signup.post(
 				const accessToken = await generateAccessToken(user);
 				const refreshToken = await generateRefreshToken(user);
 
-				res.cookie('accessToken', accessToken, {httpOnly: true, maxAge: 3600000, sameSite: 'strict'});
-				res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 3600000, sameSite: 'strict'});
+				res.cookie('accessToken', accessToken, {httpOnly: true, maxAge: 5 * 60 * 1000, sameSite: 'strict'});
+				res.cookie('refreshToken', refreshToken, {httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000, sameSite: 'strict'});
 
 				return res.json(user);
 			}

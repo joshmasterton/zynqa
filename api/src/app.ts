@@ -4,14 +4,20 @@ import helmet from 'helmet';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import {createResetPasswordTable, createUsersTable} from './database/createTables.ts';
+import {
+	createLikeDislikeTable, createPostsTable, createResetPasswordTable, createUsersTable,
+} from './database/createTables.ts';
 import {signup} from './routes/auth/signup.ts';
 import {login} from './routes/auth/login.ts';
 import {logout} from './routes/auth/logout.ts';
 import {getUser} from './routes/user/getUser.ts';
 import {forgotPassword} from './routes/auth/forgotPassword.ts';
 import {resetPassword} from './routes/auth/resetPassword.ts';
-import {updateProfile} from './routes/user/updateProfile.ts';
+import {updateProfilePicture} from './routes/user/updateProfilePicture.ts';
+import {createPost} from './routes/post/createPost.ts';
+import {getPosts} from './routes/post/getPosts.ts';
+import {likeDislike} from './routes/post/likeDislike.ts';
+import {hasLikedDisliked} from './routes/post/hasLikedDisliked.ts';
 dotenv.config({path: 'src/.env'});
 
 const app = express();
@@ -43,16 +49,34 @@ createUsersTable()
 		}
 	});
 
-// Routes
+createPostsTable()
+	.catch(error => {
+		if (error instanceof Error) {
+			throw error;
+		}
+	});
 
-// Auth
+createLikeDislikeTable()
+	.catch(error => {
+		if (error instanceof Error) {
+			throw error;
+		}
+	});
+
+// Auth routes
 app.use('/signup', signup);
 app.use('/login', login);
 app.use('/getUser', getUser);
 app.use('/logout', logout);
 app.use('/forgotPassword', forgotPassword);
 app.use('/resetPassword', resetPassword);
-app.use('/updateProfile', updateProfile);
+app.use('/updateProfilePicture', updateProfilePicture);
+
+// Post routes
+app.use('/createPost', createPost);
+app.use('/getPosts', getPosts);
+app.use('/likeDislike', likeDislike);
+app.use('/hasLikedDisliked', hasLikedDisliked);
 
 app.listen(PORT, () => {
 	console.log(`Listening to server on port ${PORT}`);

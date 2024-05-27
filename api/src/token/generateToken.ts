@@ -12,7 +12,7 @@ export const generateAccessToken = async (user: User) => {
 		throw new Error('JWT_SECRET is not defined');
 	}
 
-	return jwt.sign(user, JWT_SECRET, {expiresIn: '5s'});
+	return jwt.sign(user, JWT_SECRET, {expiresIn: '5m'});
 };
 
 export const generateRefreshToken = async (user: User) => {

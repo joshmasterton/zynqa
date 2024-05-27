@@ -24,7 +24,7 @@ export function ProfilePicture({user}: {user: User | undefined}) {
 			if (profilePicture) {
 				const formData = new FormData();
 				formData.append('profilePicture', profilePicture);
-				await request('/updateProfile', 'POST', true, formData);
+				await request('/updateProfilePicture', 'POST', true, formData);
 				window.location.reload();
 			} else {
 				setPopup('Choose a profile picture');
@@ -45,7 +45,10 @@ export function ProfilePicture({user}: {user: User | undefined}) {
 				setProfilePicture(e?.target?.files?.[0]);
 			} else {
 				setPopup('Muse be a valid image type');
+				e.target.value = '';
 			}
+		} else {
+			e.target.value = '';
 		}
 	};
 
@@ -54,9 +57,13 @@ export function ProfilePicture({user}: {user: User | undefined}) {
 			await handleSubmit(e);
 		}}>
 			<label className='file' htmlFor='profilePicture' aria-label='Add Profile Picture'>
-				<input type='file' id='profilePicture' onChange={e => {
-					handleFileChange(e);
-				}}/>
+				<input
+					type='file'
+					id='profilePicture'
+					onChange={e => {
+						handleFileChange(e);
+					}}
+				/>
 				{profilePicture
 					? <img alt='' src={URL.createObjectURL(profilePicture)}/>
 					: <img src={user?.profile_picture_url} alt='ProfilePicture' />

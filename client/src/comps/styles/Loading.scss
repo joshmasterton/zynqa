@@ -15,10 +15,6 @@ li #loading {
 	min-height: App.$height;
 }
 
-#loading.background {
-	background: App.$primaryGradient;
-}
-
 #loading.transparent > div {
 	background: conic-gradient(
 		transparent,

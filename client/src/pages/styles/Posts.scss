@@ -1,0 +1,62 @@
+@use '../../styles/App';
+
+#posts {
+	display: flex;
+	flex-direction: column;
+	align-self: stretch;
+	width: 100%;
+	min-height: 100%;
+	padding: App.$pad;
+	margin-top: calc(App.$height + (App.$pad * 3));
+}
+
+#posts > #postsList {
+	display: flex;
+	flex-direction: column;
+	min-height: 100%;
+	gap: App.$pad;
+}
+
+#posts > h2 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	margin-bottom: App.$pad;
+}
+
+html.dark #posts > h2 {
+	background: App.$darkSubtle;
+}
+
+html.light #posts > h2 {
+	background: App.$lightSubtle;
+}
+
+#posts > #postsList > div > button {
+	background: transparent;
+	color: inherit;
+}
+
+html.dark #posts > #postsList > div {
+	background: App.$darkSubtle;
+	box-shadow: App.$darkShadow;
+}
+
+html.light #posts > #postsList > div {
+	background: App.$lightSubtle;
+	box-shadow: App.$lightShadow;
+}
+
+@media screen and (min-width: App.$widthMaxLarge) {
+	#posts {
+		margin-left: calc((App.$height * 5) + (App.$pad * 3));
+	}
+}
+
+@media screen and (min-width: App.$widthMaxLargest) {
+	#posts {
+		margin-right: calc((App.$height * 9) + (App.$pad * 3));
+	}
+}
