@@ -4,16 +4,17 @@ import {check, validationResult} from 'express-validator';
 import {queryDatabase} from '../../database/initializeDatabase';
 import {compare, hash} from 'bcryptjs';
 import {limiter} from '../../utilities/rateLimiter';
+import {customSanitizer} from '../../utilities/customSanitizer';
 
 export const resetPassword = express.Router();
 
 resetPassword.post(
 	'/',
 	limiter,
-	check('email').isEmail().withMessage('Muse be valid email type').notEmpty().withMessage('Must be valid email type'),
-	check('token').isString().notEmpty().withMessage('Token cannot be empty'),
-	check('newPassword').isString().isLength({min: 6}).withMessage('New password must be at least 6 characters'),
-	check('confirmNewPassword').isString().isLength({min: 6}).withMessage('Confirm new password must be at least 6 characters'),
+	check('email').customSanitizer(customSanitizer).trim().isEmail().withMessage('Muse be valid email type').notEmpty().withMessage('Must be valid email type'),
+	check('token').customSanitizer(customSanitizer).trim().isString().notEmpty().withMessage('Token cannot be empty'),
+	check('newPassword').customSanitizer(customSanitizer).trim().isString().isLength({min: 6}).withMessage('New password must be at least 6 characters'),
+	check('confirmNewPassword').customSanitizer(customSanitizer).trim().isString().isLength({min: 6}).withMessage('Confirm new password must be at least 6 characters'),
 	async (req, res) => {
 		const validationErrors = validationResult(req);
 

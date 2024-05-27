@@ -5,14 +5,15 @@ import {check, validationResult} from 'express-validator';
 import {queryDatabase} from '../../database/initializeDatabase.ts';
 import {generateAccessToken, generateRefreshToken} from '../../token/generateToken.ts';
 import {limiter} from '../../utilities/rateLimiter.ts';
+import {customSanitizer} from '../../utilities/customSanitizer.ts';
 
 export const login = express.Router();
 
 login.post(
 	'/',
 	limiter,
-	check('username').isString().notEmpty().withMessage('Username is required'),
-	check('password').isString().isLength({min: 6}).withMessage('Password must be at least 6 characters'),
+	check('username').customSanitizer(customSanitizer).trim().isString().notEmpty().withMessage('Username is required'),
+	check('password').customSanitizer(customSanitizer).trim().isString().isLength({min: 6}).withMessage('Password must be at least 6 characters'),
 	async (req, res) => {
 		const validationErrors = validationResult(req);
 

@@ -18,10 +18,12 @@
 
 html.dark #auth {
 	background: App.$darkSubtle;
+	box-shadow: App.$darkShadow;
 }
 
 html.light #auth {
 	background: App.$lightSubtle;
+	box-shadow: App.$lightShadow;
 }
 
 #auth #lightMode {
