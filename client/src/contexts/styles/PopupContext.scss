@@ -10,7 +10,7 @@
 	height: 100%;
 	padding: App.$pad;
 	transition: transform App.$animationNormal;
-	z-index: 1;
+	z-index: 2;
 }
 
 #popup.open {
@@ -53,8 +53,10 @@
 
 html.dark #popup > div {
 	background: App.$darkBright;
+	box-shadow: App.$darkShadow;
 }
 
 html.light #popup > div {
 	background: App.$lightSubtle;
+	box-shadow: App.$lightShadow;
 }

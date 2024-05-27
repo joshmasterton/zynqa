@@ -18,10 +18,12 @@
 
 html.dark #auth {
 	background: App.$darkSubtle;
+	box-shadow: App.$darkShadow;
 }
 
 html.light #auth {
 	background: App.$lightSubtle;
+	box-shadow: App.$lightShadow;
 }
 
 #auth #lightMode {
@@ -98,5 +100,9 @@ html.light #auth {
 	bottom: 0;
 	padding: 0;
 	background: transparent;
+}
+
+#auth > footer > p {
+	opacity: 100%;
 }
 

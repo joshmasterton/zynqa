@@ -1,0 +1,38 @@
+@use '../../styles/App';
+
+#side {
+	position: fixed;
+	top: 0;
+	right: 0;
+	display: none;
+	flex-direction: column;
+	justify-content: space-between;
+	overflow: scroll;
+	gap: App.$pad;
+	padding: App.$pad;
+	padding-top: calc(App.$pad * 2);
+	margin-top: calc(App.$height + (App.$pad * 2));
+	height: calc(100% - (App.$height + (App.$pad * 2)));
+	width: calc((App.$height * 9) + calc(App.$pad * 4));
+}
+
+#side > div {
+	width: 100%;
+	height: 100rem;
+}
+
+html.dark #side > div {
+	background: App.$darkSubtle;
+	box-shadow: App.$darkShadow;
+}
+
+html.light #side > div {
+	background: App.$lightSubtle;
+	box-shadow: App.$lightShadow;
+}
+
+@media screen and (min-width: App.$widthMaxLargest) {
+	#side {
+		display: flex;
+	}
+}

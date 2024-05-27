@@ -23,10 +23,10 @@ export function ResetPassword() {
 	});
 
 	const [newDetails, setNewDetails] = useState<NewDetails>({
-		email: 'joshmasterton@tuta.io',
-		token: '9128219874987',
-		newPassword: 'Password',
-		confirmNewPassword: 'Password',
+		email: '',
+		token: '',
+		newPassword: '',
+		confirmNewPassword: '',
 	});
 
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -135,7 +135,7 @@ export function ResetPassword() {
 								handleInputChange(e);
 							}}
 							value={newDetails.confirmNewPassword}
-							placeholder='New confirm password'
+							placeholder='Confirm new password'
 						/>
 					</label>
 					<button type='button' aria-label='Show Password' onClick={() => {
