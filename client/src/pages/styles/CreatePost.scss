@@ -107,7 +107,7 @@ html.dark #createPost > form > #createPostFile {
 }
 
 html.light #createPost > form > #createPostFile {
-	background: rgb(231, 231, 231);
+	background: App.$lightSubtle;
 }
 
 #createPost > form > #createPostFile > button {

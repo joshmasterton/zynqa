@@ -1,0 +1,153 @@
+@use '../../styles/App';
+
+#profile {
+	display: flex;
+	flex-direction: column;
+	align-self: stretch;
+	width: 100%;
+	gap: App.$pad;
+	margin-top: calc(App.$height + (App.$pad * 3));
+	padding: App.$pad;
+}
+
+#profile > .profile {
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center;
+	padding: App.$pad;
+	gap: App.$pad;
+}
+
+html.dark #profile > .profile,
+html.dark #profile > .postsList {
+	background: App.$darkSubtle;
+	box-shadow: App.$darkShadow;
+}
+
+html.light #profile > .profile,
+html.light #profile > .postsList {
+	background: App.$lightSubtle;
+	box-shadow: App.$lightShadow;
+}
+
+#profile > .profile > header {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	text-align: center;
+	width: 100%;
+	gap: App.$pad;
+}
+
+#profile > .profile > header > .userImage {
+	position: relative;
+	width: 100%;
+	height: calc(App.$height * 5);
+	overflow: hidden;
+	padding: App.$pad;
+}
+
+#profile > .profile > header > .userImage > img:first-of-type {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	filter: blur(2rem);
+}
+
+#profile > .profile > header > .userImage > img:last-of-type {
+	max-width: calc(App.$height * 6);
+	z-index: 1;
+}
+
+html.dark #profile > .profile > header > .userImage > img:last-of-type {
+	box-shadow: App.$darkShadow;
+}
+
+html.light #profile > .profile > header > .userImage > img:last-of-type {
+	box-shadow: App.$lightShadow;
+}
+
+#profile > .profile > header > div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#profile > .profile > header > form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	gap: App.$pad;
+}
+
+#profile > .profile > main {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	gap: App.$pad;
+}
+
+#profile > .profile > main > div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	max-width: 100%;
+	height: App.$height;
+	padding: App.$padSmall;
+	gap: App.$pad;
+	flex: 1;
+	font-size: App.$fontSmall;
+}
+
+#profile > .profile > main > div > div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 1;
+	font-size: App.$fontSmall;
+}
+
+html.dark #profile > .profile > main > div {
+	background: App.$darkBright;
+}
+
+html.light #profile > .profile > main > div {
+	background: App.$lightBright;
+}
+
+#profile > .profile > footer {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: end;
+	gap: App.$pad;
+	flex: 1;
+}
+
+#profile > .profile > footer > button {
+	flex: 1;
+}
+
+#profile > .postsList {
+	width: 100%;
+	flex: 1;
+}
+
+@media screen and (min-width: App.$widthMaxLarge) {
+	#profile {
+		margin-left: calc((App.$height * 5) + (App.$pad * 3));
+	}		
+}
+
+@media screen and (min-width: App.$widthMaxLargest) {
+	#profile {
+		margin-left: calc((App.$height * 5) + (App.$pad * 3));
+		margin-right: calc((App.$height * 9) + (App.$pad * 3));
+	}		
+}

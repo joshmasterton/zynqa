@@ -11,6 +11,7 @@ import {Link} from 'react-router-dom';
 import {Loading} from '../comps/Loading';
 import {LightMode, useLightMode} from '../contexts/LightModeContext';
 import {FaLock, FaUser} from 'react-icons/fa';
+import {MdEmail} from 'react-icons/md';
 import {BsEyeFill, BsEyeSlashFill} from 'react-icons/bs';
 import {BiPlus} from 'react-icons/bi';
 import logoLight from '../styles/zynqa_logo_light.png';
@@ -145,7 +146,7 @@ export function Auth({isLogin}: AuthProps) {
 					{isLogin ? null : (
 						<label htmlFor='email' className='authLabel'>
 							<div>Email</div>
-							<FaUser/>
+							<MdEmail/>
 							<input
 								type='email'
 								id='email'

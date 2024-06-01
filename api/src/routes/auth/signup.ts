@@ -107,7 +107,7 @@ signup.post(
 				)VALUES(
 					$1, $2, $3, $4, $5
 				) RETURNING user_id, username, email, profile_picture_url, followers, following, friends,
-					posts, likes, comments, created_at, last_online;
+					posts, likes, dislikes, comments, created_at, last_online;
 			`, [username, username.toLowerCase(), email, hashedPassword, data.Location]);
 
 			if (newUser.rows[0]) {

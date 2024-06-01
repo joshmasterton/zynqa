@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import express from 'express';
 import {type Post, type LikeDislikeBody} from '../../types/postTypes';
+import {type AuthRequest} from '../../types/authTypes';
 import {check, validationResult} from 'express-validator';
 import {customSanitizer} from '../../utilities/customSanitizer';
 import {queryDatabase} from '../../database/initializeDatabase';
@@ -13,7 +14,6 @@ likeDislike.post(
 	verifyToken,
 	check('type').customSanitizer(customSanitizer).trim().isString().notEmpty(),
 	check('post_id').customSanitizer(customSanitizer).trim().isInt().toInt(),
-	check('username').customSanitizer(customSanitizer).trim().isString().notEmpty(),
 	async (req, res) => {
 		const validationErrors = validationResult(req);
 
@@ -22,13 +22,14 @@ likeDislike.post(
 			return res.status(400).json({error: validatoinErrorMessage});
 		}
 
-		const {type, post_id, username} = req.body as LikeDislikeBody;
+		const {user} = (req as AuthRequest);
+		const {type, post_id, post_username} = req.body as LikeDislikeBody;
 
 		try {
 			const existingLikeDislike = await queryDatabase(`
 				SELECT * FROM zynqa_likes_dislikes
 				WHERE post_id = $1 AND username = $2
-			`, [post_id, username]);
+			`, [post_id, user.username]);
 
 			if (existingLikeDislike.rows.length > 0) {
 				const existingLikeDislikeType = existingLikeDislike.rows[0].type as string;
@@ -38,19 +39,25 @@ likeDislike.post(
 						DELETE FROM zynqa_likes_dislikes
 						WHERE post_id = $1 AND 
 						username = $2
-					`, [post_id, username]);
+					`, [post_id, user.username]);
 
 					await queryDatabase(`
 						UPDATE zynqa_posts
 						SET ${type}s = ${type}s - 1
 						WHERE post_id = $1
 					`, [post_id]);
+
+					await queryDatabase(`
+						UPDATE zynqa_users
+						SET ${type}s = ${type}s - 1
+						WHERE username = $1
+					`, [post_username]);
 				} else {
 					await queryDatabase(`
 						UPDATE zynqa_likes_dislikes
 						SET type = $1
 						WHERE post_id = $2 AND username = $3
-					`, [type, post_id, username]);
+					`, [type, post_id, user.username]);
 
 					await queryDatabase(`
 						UPDATE zynqa_posts
@@ -59,10 +66,22 @@ likeDislike.post(
 					`, [post_id]);
 
 					await queryDatabase(`
+						UPDATE zynqa_users
+						SET ${type}s = ${type}s + 1
+						WHERE username = $1
+					`, [post_username]);
+
+					await queryDatabase(`
 						UPDATE zynqa_posts
 						SET ${type === 'like' ? 'dislike' : 'like'}s = ${type === 'like' ? 'dislike' : 'like'}s - 1
 						WHERE post_id = $1
 					`, [post_id]);
+
+					await queryDatabase(`
+						UPDATE zynqa_users
+						SET ${type === 'like' ? 'dislike' : 'like'}s = ${type === 'like' ? 'dislike' : 'like'}s - 1
+						WHERE username = $1
+					`, [post_username]);
 				}
 
 				const postFromDatabase = await queryDatabase(`
@@ -71,6 +90,7 @@ likeDislike.post(
 				`, [post_id]);
 
 				const updatedPost: Post = postFromDatabase.rows[0] as Post;
+
 				return res.status(201).json(updatedPost);
 			}
 
@@ -80,7 +100,7 @@ likeDislike.post(
 					type,
 					username
 				)VALUES($1, $2, $3)
-			`, [post_id, type, username]);
+			`, [post_id, type, user.username]);
 
 			await queryDatabase(`
 				UPDATE zynqa_posts
@@ -88,12 +108,19 @@ likeDislike.post(
 				WHERE post_id = $1
 			`, [post_id]);
 
+			await queryDatabase(`
+				UPDATE zynqa_users
+				SET ${type}s = ${type}s + 1
+				WHERE username = $1
+			`, [post_username]);
+
 			const postFromDatabase = await queryDatabase(`
 				SELECT * FROM zynqa_posts
 				WHERE post_id = $1
 			`, [post_id]);
 
 			const updatedPost: Post = postFromDatabase.rows[0] as Post;
+
 			return res.status(201).json(updatedPost);
 		} catch (error) {
 			if (error instanceof Error) {

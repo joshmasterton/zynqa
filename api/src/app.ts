@@ -18,6 +18,7 @@ import {createPost} from './routes/post/createPost.ts';
 import {getPosts} from './routes/post/getPosts.ts';
 import {likeDislike} from './routes/post/likeDislike.ts';
 import {hasLikedDisliked} from './routes/post/hasLikedDisliked.ts';
+import {getProfile} from './routes/user/getProfile.ts';
 dotenv.config({path: 'src/.env'});
 
 const app = express();
@@ -78,9 +79,8 @@ app.use('/getPosts', getPosts);
 app.use('/likeDislike', likeDislike);
 app.use('/hasLikedDisliked', hasLikedDisliked);
 
-// Post routes
-app.use('/createPost', createPost);
-app.use('/getPosts', getPosts);
+// Profile
+app.use('/getProfile', getProfile);
 
 app.listen(PORT, () => {
 	console.log(`Listening to server on port ${PORT}`);

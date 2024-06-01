@@ -1,7 +1,6 @@
 import {Link} from 'react-router-dom';
 import {useEffect, useState} from 'react';
 import {useUser} from '../contexts/UserContext';
-import {ProfilePicture} from './ProfilePicture';
 import {request} from '../requests/requests';
 import {Loading} from './Loading';
 import {LightMode, useLightMode} from '../contexts/LightModeContext';
@@ -69,7 +68,7 @@ export function Nav() {
 			</header>
 			<main>
 				<ul>
-					<ProfilePicture user={user}/>
+					<img src={user?.profile_picture_url} alt='ProfilePicture' />
 					<li>
 						<div>{user?.username}</div>
 						<p>{user?.email}</p>
@@ -84,7 +83,7 @@ export function Nav() {
 							Friends
 						</Link>
 					</li><li>
-						<Link to='/'>
+						<Link to={`profile/${user?.username}`}>
 							<RiUser3Fill />
 							Profile
 						</Link>
@@ -115,7 +114,7 @@ export function Nav() {
 						</Link>
 					</li>
 					<li>
-						<Link to='/'>
+						<Link to={`/profile/${user?.username}`}>
 							<RiUser3Fill/>
 							Profile
 						</Link>

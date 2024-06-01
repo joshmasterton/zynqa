@@ -85,6 +85,19 @@ html.light #nav > footer > ul {
 	border-bottom-right-radius: 0;
 }
 
+#nav > main img {
+	width: 100%;
+	height: calc(App.$height * 5);
+}
+
+html.dark #nav > main img {
+	background: App.$darkBright;
+}
+
+html.light #nav > main img {
+	background: App.$lightBright;
+}
+
 #nav > footer {
 	position: fixed;
 	top: 0;

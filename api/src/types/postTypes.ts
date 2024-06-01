@@ -23,7 +23,7 @@ export type Post = {
 export type LikeDislikeBody = {
 	type: string;
 	post_id: number;
-	username: string;
+	post_username: string;
 };
 
 export type HasLikedDislikedRequest = Request & {
