@@ -3,7 +3,6 @@ import {useUser} from '../contexts/UserContext';
 import {request} from '../requests/requests';
 import {Loading} from './Loading';
 import {Link, useNavigate} from 'react-router-dom';
-import {ProfilePicture} from './ProfilePicture';
 import {LightMode} from '../contexts/LightModeContext';
 import {BiChevronLeft} from 'react-icons/bi';
 import {
@@ -47,7 +46,7 @@ export function ReturnNav() {
 			</header>
 			<main>
 				<ul>
-					<ProfilePicture user={user}/>
+					<img src={user?.profile_picture_url} alt='ProfilePicture' />
 					<li>
 						<div>{user?.username}</div>
 						<p>{user?.email}</p>
@@ -62,7 +61,7 @@ export function ReturnNav() {
 							Friends
 						</Link>
 					</li><li>
-						<Link to='/'>
+						<Link to={`/profile/${user?.username}`}>
 							<RiUser3Fill />
 							Profile
 						</Link>

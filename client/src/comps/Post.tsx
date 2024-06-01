@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {type HasLikedDisliked, type PostType} from '../types/PostTypes';
 import {useEffect, useState} from 'react';
-import {useUser} from '../contexts/UserContext';
 import {usePopup} from '../contexts/PopupContext';
 import {request} from '../requests/requests';
+import {Link} from 'react-router-dom';
 import {FaArrowDown, FaArrowUp} from 'react-icons/fa';
 import {BiSolidComment} from 'react-icons/bi';
 import './styles/Post.scss';
 
 export function Post({post}: {post: PostType}) {
-	const {user} = useUser();
 	const {setPopup} = usePopup();
 	const [currentPost, setCurrentPost] = useState<PostType>(post);
 	const [hasLikedDislike, setHasLikedDisliked] = useState<string | undefined>(undefined);
@@ -46,7 +45,7 @@ export function Post({post}: {post: PostType}) {
 			const updatedPost = await request<unknown, PostType>('/likeDislike', 'POST', false, {
 				type,
 				post_id: post.post_id.toString(),
-				username: user?.username,
+				post_username: post.username,
 			});
 
 			if (updatedPost) {
@@ -72,7 +71,9 @@ export function Post({post}: {post: PostType}) {
 	return (
 		<div className='post'>
 			<header>
-				<img alt='' src={currentPost?.profile_picture_url}/>
+				<Link to={`/profile/${currentPost?.username}`}>
+					<img alt='' src={currentPost?.profile_picture_url}/>
+				</Link>
 				<div>
 					<div>
 						<div>

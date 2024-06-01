@@ -28,6 +28,7 @@ export const createUsersTable = async () => {
 				friends INT DEFAULT 0,
 				posts INT DEFAULT 0,
 				likes INT DEFAULT 0,
+				dislikes INT DEFAULT 0,
 				comments INT DEFAULT 0,
 				created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
 				last_online TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP

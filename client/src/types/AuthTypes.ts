@@ -37,6 +37,7 @@ export type User = {
 	profile_picture_url: string;
 	posts: number;
 	likes: number;
+	dislikes: number;
 	comments: number;
 	created_at: Date;
 	last_online: Date;

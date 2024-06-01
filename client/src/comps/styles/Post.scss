@@ -33,7 +33,13 @@ html.light .post {
 	gap: calc(App.$padSmall / 2);
 }
 
-.post > header > img {
+.post > header > a {
+	width: App.$height;
+	padding: 0;
+	background: transparent;
+}
+
+.post > header > a > img {
 	width: App.$height;
 }
 
@@ -57,7 +63,7 @@ html.dark .post > main > div {
 }
 
 html.light .post > main > div {
-	background: rgb(231, 231, 231);
+	background: App.$lightSubtle;
 }
 
 .post > main > div > img {
@@ -78,6 +84,14 @@ html.light .post > main > div {
 	z-index: 1;
 }
 
+html.dark .post > main > div > img:first-of-type {
+	box-shadow: App.$darkShadow;
+}
+
+html.light .post > main > div > img:first-of-type {
+	box-shadow: App.$lightShadow;
+}
+
 .post > main > div > img:last-of-type {
 	position: absolute;
 	top: 0;
@@ -85,6 +99,14 @@ html.light .post > main > div {
 	width: 100%;
 	height: calc(App.$height * 7);
 	filter: blur(2rem);
+}
+
+html.dark .post > main > div > img:last-of-type {
+	background: App.$darkBright;
+}
+
+html.light .post > main > div > img:last-of-type {
+	background: App.$lightBright;
 }
 
 .post > header > img {

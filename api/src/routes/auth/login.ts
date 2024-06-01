@@ -43,7 +43,7 @@ login.post(
 
 			const userFromDatabase = await queryDatabase(`
 				SELECT user_id, username, email, followers, following, friends, profile_picture_url,
-				posts, likes, comments, created_at, last_online FROM zynqa_users
+				posts, likes, dislikes, comments, created_at, last_online FROM zynqa_users
 				WHERE username = $1
 			`, [username]);
 

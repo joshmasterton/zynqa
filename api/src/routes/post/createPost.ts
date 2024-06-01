@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import {type PostBody} from '../../types/postTypes';
+import {type AuthRequest} from '../../types/authTypes';
 import express from 'express';
 import multer from 'multer';
 import sharp from 'sharp';
@@ -59,6 +60,7 @@ createPost.post(
 
 		const {post, username, email, profile_picture_url} = req.body as PostBody;
 		const {file} = req;
+		const {user} = (req as AuthRequest);
 
 		try {
 			if (file) {
@@ -109,6 +111,12 @@ createPost.post(
 					)
 				`, [post, username, email, profile_picture_url]);
 			}
+
+			await queryDatabase(`
+				UPDATE zynqa_users
+				SET posts = posts + 1
+				WHERE username = $1
+			`, [user.username]);
 
 			return res.status(201).json({message: 'Post uploaded'});
 		} catch (error) {

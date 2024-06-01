@@ -10,6 +10,7 @@ import {ForgotPassword} from './pages/ForgotPassword';
 import {Posts} from './pages/Posts';
 import {CreatePost} from './pages/CreatePost';
 import {Auth} from './pages/Auth';
+import {Profile} from './pages/Profile';
 import './styles/App.scss';
 
 export const routes: Routes[] = [
@@ -26,6 +27,14 @@ export const routes: Routes[] = [
 		element: (
 			<ProtectedRoute>
 				<CreatePost/>
+			</ProtectedRoute>
+		),
+	},
+	{
+		path: '/profile/:username',
+		element: (
+			<ProtectedRoute>
+				<Profile/>
 			</ProtectedRoute>
 		),
 	},
